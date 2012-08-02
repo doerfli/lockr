@@ -9,14 +9,15 @@ require 'base64'
 # decrypt methods. 
     
 class BasePasswordStore
-    attr_accessor :id,:username,:enc_password
+    attr_accessor :id,:url,:username,:enc_password
     
     # stores the id, username in the store. the given password is 
     # encrypted with the help of the encrypt method which is called 
     # with the password and the key. The encrypted password is then
     # stored in Base64 encoded form. 
-    def initialize(id,username,pwd,key)
+    def initialize(id,url,username,pwd,key)
       @id = id
+      @url = url
       @username = username
       @enc_pwd = Base64.encode64( encrypt( pwd, key)).strip()
     end

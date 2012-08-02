@@ -62,7 +62,7 @@ end
 
 
 class AddAction < BaseAction
-  def initialize(id,username,pwd,keyfile, vault)
+  def initialize(id,url,username,pwd,keyfile,vault)
     keyfilehash = calculate_hash( keyfile)
     
     stores = load_from_vault( vault)
@@ -77,7 +77,7 @@ class AddAction < BaseAction
       end
     end
     
-    new_store = AesPasswordStore.new( id, username, pwd, keyfilehash)
+    new_store = AesPasswordStore.new( id, url, username, pwd, keyfilehash)
     stores[id][username] = new_store
     
     save_to_vault( stores, vault)
@@ -114,7 +114,9 @@ class ShowAction < BaseAction
     end
     
     begin
-      say("ID '<%= color('#{id}', :blue) %>', user '<%= color('#{username}', :blue) %>'")
+      say("Password found")
+      say("ID '<%= color('#{store.id}', :blue) %>', URL '<%= color('#{store.url}', :blue) %>'")
+      say("User '<%= color('#{store.username}', :blue) %>'")
       say("Password:  <%= color('#{store.get_password( keyfilehash)}', :green) %>")
     rescue OpenSSL::Cipher::CipherError
       say( "<%= color('Invalid keyfile', :red) %>")

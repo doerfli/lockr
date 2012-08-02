@@ -38,6 +38,11 @@ class Lockr
         options[:username] = user
       end
       
+      options[:url] = nil
+      opts.on( '--url URL', 'the URL the password belongs to') do |url|
+        options[:url] = url
+      end
+      
       options[:keyfile] = nil
       opts.on( '-k', '--keyfile FILE', 'the FILE to use as key for the password encryption') do |file|
         options[:keyfile] = file
@@ -91,10 +96,17 @@ class Lockr
       options[:id] = ask("Id?  ") { |q| }
     end
     
-    # username is required for actions add, change, remove
-    actions_requiring_username = %w{ a add c change r remove}
+    # username is required for actions add, remove
+    actions_requiring_username = %w{ a add r remove}
     if options[:username].nil? and not actions_requiring_username.index( options[:action]).nil?
       options[:username] = ask("Username?  ") { |q| }
+    end
+    
+    # url is optional for add
+    actions_requiring_url = %w{ a add}
+    if options[:url].nil? and not actions_requiring_url.index( options[:action]).nil?
+      options[:url] = ask("Url?  ") { |q| }
+      options[:url] = nil if options[:url].strip() == ''
     end
   end
   
@@ -102,7 +114,7 @@ class Lockr
     case options[:action]
     when 'a', 'add'
       password = ask("Password?  ") { |q| q.echo = "x" }
-      action = AddAction.new( options[:id], options[:username], password, options[:keyfile], options[:vault])
+      action = AddAction.new( options[:id], options[:url], options[:username], password, options[:keyfile], options[:vault])
     when 'r', 'remove'
       action = RemoveAction.new( options[:id], options[:username], options[:vault])
     when 's', 'show'
