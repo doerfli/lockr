@@ -125,6 +125,7 @@ class ShowAction < BaseAction
   end
 end
 
+
 class ListAction < BaseAction
   def initialize(vault)
     stores = load_from_vault( vault)
@@ -136,6 +137,7 @@ class ListAction < BaseAction
     }
   end
 end    
+
 
 class RemoveAction < BaseAction
   def initialize(id,username,vault)
