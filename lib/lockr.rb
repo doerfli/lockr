@@ -5,6 +5,7 @@ require 'optparse'
 require 'highline/import'
 
 require 'lockr/action'
+require 'lockr/pwdgen'
   
 class Lockr
   def run()
@@ -51,6 +52,11 @@ class Lockr
       options[:vault] = 'vault.yaml'
       opts.on( '-v', '--vault FILE', 'FILE is the name of the vault to store the password sets') do |file|
         options[:vault] = file
+      end
+      
+      options[:generatepwd] = nil
+      opts.on( '-g', '--genpwd PARAMS', 'generate a random password (based on the optional PARAMS)') do |params|
+        options[:generatepwd] = params
       end
     
       # This displays the help screen, all programs are
@@ -113,7 +119,12 @@ class Lockr
   def process_actions( options)
     case options[:action]
     when 'a', 'add'
-      password = ask("Password?  ") { |q| q.echo = "x" }
+      if options[:generatepwd].nil?
+        password = ask("Password?  ") { |q| q.echo = "x" }
+      else 
+        password = PasswordGenerator.new.generate( options[:generatepwd])
+      end 
+      
       action = AddAction.new( options[:id], options[:url], options[:username], password, options[:keyfile], options[:vault])
     when 'r', 'remove'
       action = RemoveAction.new( options[:id], options[:username], options[:vault])
