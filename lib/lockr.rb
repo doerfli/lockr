@@ -88,16 +88,16 @@ class Lockr
   
   def acquire_additional_input( options)
     # id is required for all actions except list
-    if options[:id].nil? and %w{ l list}.index( options[:action]).nil?
+    while options[:id].nil? and %w{ l list}.index( options[:action]).nil?
       options[:id] = ask("Id?  ") { |q| }
-      ### TODO check for nil
+      options[:id] = nil if options[:id].strip() == '' 
     end
     
     # username is required for actions add, remove
     actions_requiring_username = %w{ a add r remove}
-    if options[:username].nil? and not actions_requiring_username.index( options[:action]).nil?
+    while options[:username].nil? and not actions_requiring_username.index( options[:action]).nil?
       options[:username] = ask("Username?  ") { |q| }
-      ### TODO check for nil
+      options[:username] = nil if options[:username].strip == ''
     end
     
     # url is optional for add
@@ -105,7 +105,6 @@ class Lockr
     if options[:url].nil? and not actions_requiring_url.index( options[:action]).nil?
       options[:url] = ask("Url?  ") { |q| }
       options[:url] = nil if options[:url].strip() == ''
-      ### TODO check for nil
     end
   end
   
