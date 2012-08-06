@@ -111,23 +111,28 @@ class Lockr
   end
   
   def process_actions( options)
-    case options[:action]
-    when 'a', 'add'
-      if options[:generatepwd].nil?
-        password = ask("Password?  ") { |q| q.echo = "x" }
-      else 
-        password = PasswordGenerator.new.generate( options[:generatepwd])
-      end 
-      
-      action = AddAction.new( options[:id], options[:url], options[:username], password, options[:keyfile], options[:vault])
-    when 'r', 'remove'
-      action = RemoveAction.new( options[:id], options[:username], options[:keyfile], options[:vault])
-    when 's', 'show'
-      action = ShowAction.new( options[:id], options[:username], options[:keyfile], options[:vault])
-    when 'l', 'list'
-      action = ListAction.new( options[:vault])
-    else
-      puts "Unknown action #{options[:action]}"
+    begin
+      case options[:action]
+      when 'a', 'add'
+        if options[:generatepwd].nil?
+          password = ask("Password?  ") { |q| q.echo = "x" }
+        else 
+          password = PasswordGenerator.new.generate( options[:generatepwd])
+        end 
+        
+        action = AddAction.new( options[:id], options[:url], options[:username], password, options[:keyfile], options[:vault])
+      when 'r', 'remove'
+        action = RemoveAction.new( options[:id], options[:username], options[:keyfile], options[:vault])
+      when 's', 'show'
+        action = ShowAction.new( options[:id], options[:username], options[:keyfile], options[:vault])
+      when 'l', 'list'
+        action = ListAction.new( options[:vault])
+      else
+        puts "Unknown action #{options[:action]}"
+      end
+    rescue OpenSSL::Cipher::CipherError
+      say( "<%= color('Invalid keyfile', :red) %>")
+      exit 42
     end
   end
 end
