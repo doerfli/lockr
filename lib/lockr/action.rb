@@ -63,29 +63,4 @@ class ListAction < BaseAction
 end    
 
 
-class RemoveAction < BaseAction
-  def initialize(id,username,vault)
-    stores = load_from_vault( vault)
-    
-    unless stores.has_key?( id)
-      puts "Id '#{id}' not found"
-      exit 20
-    end
-    
-    unless stores[id].has_key?(username)
-      puts "Username '#{username}' not found for id '#{id}'"
-      exit 21
-    end
-    
-    if ( stores[id].has_key?( username))
-      overwrite = ask( "Are you sure you want to delete the entry with id '#{id}' and username '#{username}'? (y/n)  ") { |q| }
-      unless overwrite.downcase == 'y'
-        exit 22
-      end
-    end
-    
-    stores[id].delete( username)
-    save_to_vault( stores, vault)
-    puts "Entry removed"
-  end
-end
+

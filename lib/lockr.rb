@@ -1,10 +1,11 @@
-require "rubygems"
-require "bundler/setup"
+require 'rubygems'
+require 'bundler/setup'
 
 require 'optparse'
 require 'highline/import'
 
 require 'lockr/action/add'
+require 'lockr/action/remove'
 require 'lockr/pwdgen'
   
 class Lockr
@@ -119,7 +120,7 @@ class Lockr
       
       action = AddAction.new( options[:id], options[:url], options[:username], password, options[:keyfile], options[:vault])
     when 'r', 'remove'
-      action = RemoveAction.new( options[:id], options[:username], options[:vault])
+      action = RemoveAction.new( options[:id], options[:username], options[:keyfile], options[:vault])
     when 's', 'show'
       action = ShowAction.new( options[:id], options[:username], options[:keyfile], options[:vault])
     when 'l', 'list'
