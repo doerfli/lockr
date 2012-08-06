@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name        = 'lockr'
-  s.version     = '0.1.0'
+  s.version     = '0.2.0'
   s.executables << 'lockr'
-  s.date        = '2012-08-01'
+  s.date        = '2012-08-06'
   s.summary     = 'Safe password storage'
   s.description = 'Store your passwords AES encrypted in a simple yaml file'
   s.authors     = ['Marc Doerflinger']

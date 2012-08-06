@@ -1,7 +1,7 @@
-require 'lockr/action/base.rb'
-require 'lockr/pwdstore.rb'
+require 'lockr/action/aes'
+require 'lockr/pwdstore'
 
-class AddAction < BaseAction
+class AddAction < AesAction
   
   def initialize(id,url,username,pwd,keyfile,vault)
     keyfilehash = calculate_hash( keyfile)
