@@ -6,6 +6,7 @@ require 'highline/import'
 
 require 'lockr/action/add'
 require 'lockr/action/remove'
+require 'lockr/action/show'
 require 'lockr/pwdgen'
   
 class Lockr
