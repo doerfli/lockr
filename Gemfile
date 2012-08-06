@@ -1,4 +1,3 @@
-source 'https://rubygems.org'
-
-gem 'net-sftp'
-gem 'highline'
+source "http://www.rubygems.org"
+ 
+gemspec

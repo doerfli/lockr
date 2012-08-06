@@ -1,10 +1,13 @@
-require "rubygems"
-require "bundler/setup"
+require 'rubygems'
+require 'bundler/setup'
 
 require 'optparse'
 require 'highline/import'
 
-require 'lockr/action'
+require 'lockr/action/add'
+require 'lockr/action/list'
+require 'lockr/action/remove'
+require 'lockr/action/show'
 require 'lockr/pwdgen'
   
 class Lockr
@@ -25,23 +28,13 @@ class Lockr
     
       # Define the options, and what they do
       options[:action] = nil
-      opts.on( '-a', '--action ACTION', 'Execute the requested ACTION' ) do |id|
+      opts.on( '-a', '--action ACTION', 'Execute the requested ACTION (add, remove, list, show)' ) do |id|
         options[:action] = id
       end
     
       options[:id] = nil
       opts.on( '-i', '--id ID', 'the ID of the password set' ) do |id|
         options[:id] = id
-      end
-      
-      options[:username] = nil
-      opts.on( '-u', '--username USERNAME', 'the USERNAME for the password set') do |user|
-        options[:username] = user
-      end
-      
-      options[:url] = nil
-      opts.on( '--url URL', 'the URL the password belongs to') do |url|
-        options[:url] = url
       end
       
       options[:keyfile] = nil
@@ -98,14 +91,16 @@ class Lockr
   
   def acquire_additional_input( options)
     # id is required for all actions except list
-    if options[:id].nil? and %w{ l list}.index( options[:action]).nil?
+    while options[:id].nil? and %w{ l list}.index( options[:action]).nil?
       options[:id] = ask("Id?  ") { |q| }
+      options[:id] = nil if options[:id].strip() == '' 
     end
     
     # username is required for actions add, remove
     actions_requiring_username = %w{ a add r remove}
-    if options[:username].nil? and not actions_requiring_username.index( options[:action]).nil?
+    while options[:username].nil? and not actions_requiring_username.index( options[:action]).nil?
       options[:username] = ask("Username?  ") { |q| }
+      options[:username] = nil if options[:username].strip == ''
     end
     
     # url is optional for add
@@ -117,23 +112,28 @@ class Lockr
   end
   
   def process_actions( options)
-    case options[:action]
-    when 'a', 'add'
-      if options[:generatepwd].nil?
-        password = ask("Password?  ") { |q| q.echo = "x" }
-      else 
-        password = PasswordGenerator.new.generate( options[:generatepwd])
-      end 
-      
-      action = AddAction.new( options[:id], options[:url], options[:username], password, options[:keyfile], options[:vault])
-    when 'r', 'remove'
-      action = RemoveAction.new( options[:id], options[:username], options[:vault])
-    when 's', 'show'
-      action = ShowAction.new( options[:id], options[:username], options[:keyfile], options[:vault])
-    when 'l', 'list'
-      action = ListAction.new( options[:vault])
-    else
-      puts "Unknown action #{options[:action]}"
+    begin
+      case options[:action]
+      when 'a', 'add'
+        if options[:generatepwd].nil?
+          password = ask("Password?  ") { |q| q.echo = "x" }
+        else 
+          password = PasswordGenerator.new.generate( options[:generatepwd])
+        end 
+        
+        action = AddAction.new( options[:id], options[:url], options[:username], password, options[:keyfile], options[:vault])
+      when 'r', 'remove'
+        action = RemoveAction.new( options[:id], options[:username], options[:keyfile], options[:vault])
+      when 's', 'show'
+        action = ShowAction.new( options[:id], options[:username], options[:keyfile], options[:vault])
+      when 'l', 'list'
+        action = ListAction.new( options[:keyfile], options[:vault])
+      else
+        puts "Unknown action #{options[:action]}"
+      end
+    rescue OpenSSL::Cipher::CipherError
+      say( "<%= color('Invalid keyfile', :red) %>")
+      exit 42
     end
   end
 end
