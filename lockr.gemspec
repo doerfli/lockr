@@ -14,4 +14,5 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://lockr.byteblues.com/'
   
   s.add_dependency( 'highline')
+  s.add_dependency( 'bundler')
 end
