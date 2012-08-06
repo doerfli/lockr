@@ -4,7 +4,7 @@ require "bundler/setup"
 require 'optparse'
 require 'highline/import'
 
-require 'lockr/action'
+require 'lockr/action/add'
 require 'lockr/pwdgen'
   
 class Lockr
@@ -25,23 +25,13 @@ class Lockr
     
       # Define the options, and what they do
       options[:action] = nil
-      opts.on( '-a', '--action ACTION', 'Execute the requested ACTION' ) do |id|
+      opts.on( '-a', '--action ACTION', 'Execute the requested ACTION (add, remove, list, show)' ) do |id|
         options[:action] = id
       end
     
       options[:id] = nil
       opts.on( '-i', '--id ID', 'the ID of the password set' ) do |id|
         options[:id] = id
-      end
-      
-      options[:username] = nil
-      opts.on( '-u', '--username USERNAME', 'the USERNAME for the password set') do |user|
-        options[:username] = user
-      end
-      
-      options[:url] = nil
-      opts.on( '--url URL', 'the URL the password belongs to') do |url|
-        options[:url] = url
       end
       
       options[:keyfile] = nil
@@ -100,12 +90,14 @@ class Lockr
     # id is required for all actions except list
     if options[:id].nil? and %w{ l list}.index( options[:action]).nil?
       options[:id] = ask("Id?  ") { |q| }
+      ### TODO check for nil
     end
     
     # username is required for actions add, remove
     actions_requiring_username = %w{ a add r remove}
     if options[:username].nil? and not actions_requiring_username.index( options[:action]).nil?
       options[:username] = ask("Username?  ") { |q| }
+      ### TODO check for nil
     end
     
     # url is optional for add
@@ -113,6 +105,7 @@ class Lockr
     if options[:url].nil? and not actions_requiring_url.index( options[:action]).nil?
       options[:url] = ask("Url?  ") { |q| }
       options[:url] = nil if options[:url].strip() == ''
+      ### TODO check for nil
     end
   end
   
