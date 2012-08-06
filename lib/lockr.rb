@@ -5,6 +5,7 @@ require 'optparse'
 require 'highline/import'
 
 require 'lockr/action/add'
+require 'lockr/action/list'
 require 'lockr/action/remove'
 require 'lockr/action/show'
 require 'lockr/pwdgen'
@@ -126,7 +127,7 @@ class Lockr
       when 's', 'show'
         action = ShowAction.new( options[:id], options[:username], options[:keyfile], options[:vault])
       when 'l', 'list'
-        action = ListAction.new( options[:vault])
+        action = ListAction.new( options[:keyfile], options[:vault])
       else
         puts "Unknown action #{options[:action]}"
       end
