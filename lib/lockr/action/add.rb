@@ -8,15 +8,11 @@ class AddAction < BaseAction
     
     pwd_directory = load_from_vault( vault)
     
-    # TODO decrypt stores from file
-    #if pwd_directory.has_key?( id)
-    #  enc = pwd_directory[id]
-    #  dev = decrypt( enc, keyfilehash)
-    #else
+    if pwd_directory.has_key?( id)
+      pwd_directory_id = YAML::load(decrypt( pwd_directory[id][:enc], keyfilehash, pwd_directory[id][:salt]))
+    else
       pwd_directory_id = {}
-    #end
-    
-    
+    end
     
     if ( pwd_directory_id.has_key?( username))
       overwrite = ask( "Password already exists. Update? (y/n)  ") { |q| }
