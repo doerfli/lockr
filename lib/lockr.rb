@@ -9,6 +9,7 @@ require 'lockr/action/list'
 require 'lockr/action/remove'
 require 'lockr/action/show'
 require 'lockr/pwdgen'
+require 'lockr/version'
   
 class Lockr
   def run()
@@ -58,6 +59,14 @@ class Lockr
         puts opts
         exit
       end
+      
+      opts.on('-v', '--version', 'Show version') do
+        puts "Lockr #{LockrVer::VERSION} (#{LockrVer::DATE})"
+        exit
+      end
+      
+      opts.separator ""
+      opts.separator "For detailed instructions on how to use Lockr, please visit http://lockr.byteblues.com"
     end
     
     # Parse the command-line. Remember there are two forms

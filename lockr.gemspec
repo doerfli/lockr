@@ -1,8 +1,12 @@
+# -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+require "lockr/version"
+
 Gem::Specification.new do |s|
   s.name        = 'lockr'
-  s.version     = '0.2.0'
+  s.version     = LockrVer::VERSION
+  s.date        = LockrVer::DATE
   s.executables << 'lockr'
-  s.date        = '2012-08-06'
   s.summary     = 'Safe password storage'
   s.description = 'Store your passwords AES encrypted in a simple yaml file'
   s.authors     = ['Marc Doerflinger']
