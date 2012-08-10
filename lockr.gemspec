@@ -20,7 +20,8 @@ Gem::Specification.new do |s|
                    'lib/lockr/action/show.rb',
                    'lib/lockr/encryption/aes.rb',
                    'lib/lockr/pwdgen.rb',
-                   'lib/lockr/pwdstore.rb']
+                   'lib/lockr/pwdstore.rb',
+                   'lib/lockr/version.rb']
   s.homepage    = 'http://lockr.byteblues.com/'
   
   s.add_dependency( 'highline')
