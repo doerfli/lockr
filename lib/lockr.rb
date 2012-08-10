@@ -8,12 +8,15 @@ require 'lockr/action/add'
 require 'lockr/action/list'
 require 'lockr/action/remove'
 require 'lockr/action/show'
+require 'lockr/config'
 require 'lockr/pwdgen'
 require 'lockr/version'
   
 class Lockr
+  
   def run()
     options = parse_options()
+    merge_config( options)
     validate_options( options)
     acquire_additional_input( options)
     process_actions( options)
@@ -77,6 +80,21 @@ class Lockr
     optparse.parse!
   
     options
+  end
+  
+  def merge_config( options)
+    configfile = Configuration.new()
+    
+    if configfile.config.nil? 
+      return
+    end
+    
+    unless configfile.config.has_key?( :lockr)
+      return
+    end
+    
+    cfg = configfile.config[:lockr]
+    options[:vault] = File.expand_path(cfg[:vault]) if options[:vault] == 'vault.yaml'
   end
   
   def validate_options( options)

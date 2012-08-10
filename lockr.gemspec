@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
                    'lib/lockr/action/remove.rb',
                    'lib/lockr/action/show.rb',
                    'lib/lockr/encryption/aes.rb',
+                   'lib/lockr/config.rb',
                    'lib/lockr/pwdgen.rb',
                    'lib/lockr/pwdstore.rb',
                    'lib/lockr/version.rb']
