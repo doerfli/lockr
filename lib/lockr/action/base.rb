@@ -3,7 +3,7 @@ require 'lockr/encryption/aes'
 
 class BaseAction
   def calculate_hash( filename)
-    sha1 = OpenSSL::Digest::SHA512.new
+    sha512 = OpenSSL::Digest::SHA512.new
 
     File.open( filename) do |file|
       buffer = ''
@@ -11,11 +11,11 @@ class BaseAction
       # Read the file 512 bytes at a time
       while not file.eof
         file.read(512, buffer)
-        sha1.update(buffer)
+        sha512.update(buffer)
       end
     end
     
-    sha1.to_s
+    sha512.to_s
   end
   
   def save_to_vault( storelist, vault)
