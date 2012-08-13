@@ -43,12 +43,12 @@ class Lockr
       
       options[:keyfile] = nil
       opts.on( '-k', '--keyfile FILE', 'the FILE to use as key for the password encryption') do |file|
-        options[:keyfile] = File.path_expand(file)
+        options[:keyfile] = File.expand_path(file)
       end
       
       options[:vault] = 'vault.yaml'
       opts.on( '-v', '--vault FILE', 'FILE is the name of the vault to store the password sets') do |file|
-        options[:vault] = File.path_expand(file)
+        options[:vault] = File.expand_path(file)
       end
       
       options[:generatepwd] = nil
@@ -63,7 +63,7 @@ class Lockr
         exit
       end
       
-      opts.on('-v', '--version', 'Show version') do
+      opts.on('--version', 'Show version') do
         puts "Lockr #{LockrVer::VERSION} (#{LockrVer::DATE})"
         exit
       end
