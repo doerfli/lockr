@@ -1,3 +1,4 @@
 vault.yaml*
 *.gem
 Gemfile.lock
+.lockr
