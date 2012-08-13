@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.version     = LockrVer::VERSION
   s.date        = LockrVer::DATE
   s.executables << 'lockr'
-  s.summary     = 'Safe password storage'
-  s.description = 'Store your passwords AES encrypted in a simple yaml file'
+  s.summary     = 'Command line based password manager'
+  s.description = 'Lockr is a command line based password manager. Passwords are stored AES-encrypted in a file on your own system.'
   s.authors     = ['Marc Doerflinger']
   s.email       = 'info@byteblues.com'
   s.files       = ['lib/lockr.rb',
