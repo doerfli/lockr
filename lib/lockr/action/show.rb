@@ -15,13 +15,17 @@ class ShowAction < AesAction
     pwd_directory_id = YAML::load(decrypt( pwd_directory[id][:enc], keyfilehash, pwd_directory[id][:salt]))
     
     if username.nil? 
-      unless pwd_directory_id.length == 1
-        puts "More than one username for id '#{id}'. Please provide a username!"
-        exit 13
+      if pwd_directory_id.length == 1
+        key = pwd_directory_id.keys[0]
+        store = pwd_directory_id[key]
+      else
+        puts "More than one username for id '#{id}'."
+        while username.nil? 
+          username = ask("Username?  ") { |q| }
+          username = nil if username.strip == ''
+        end
+        store = pwd_directory_id[username]
       end
-       
-      key = pwd_directory_id.keys[0]
-      store = pwd_directory_id[key]
     else  
       unless pwd_directory_id.has_key?(username)
         puts "Username '#{username}' not found for id '#{id}'"
