@@ -1,5 +1,5 @@
 class Configuration
-  CONFIG_FILE = 'lockr'
+  CONFIG_FILE = '.lockr'
   attr_reader :config
   
   def initialize()
@@ -10,7 +10,7 @@ class Configuration
         @config = YAML::load(f)
       end
     else
-      filename = File.expand_path("~/.#{CONFIG_FILE}")
+      filename = File.expand_path("~/#{CONFIG_FILE}")
       if File.exists?( filename)
         File.open( filename, 'r') do |f|
           @config = YAML::load(f)
