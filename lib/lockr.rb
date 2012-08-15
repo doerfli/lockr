@@ -10,16 +10,18 @@ require 'lockr/action/remove'
 require 'lockr/action/show'
 require 'lockr/config'
 require 'lockr/pwdgen'
+require 'lockr/sftp'
 require 'lockr/version'
   
 class Lockr
   
   def run()
     options = parse_options()
-    merge_config( options)
+    configfile = Configuration.new()
+    merge_config( configfile, options)
     validate_options( options)
     acquire_additional_input( options)
-    process_actions( options)
+    process_actions( configfile, options)
   end
   
   def parse_options()
@@ -55,7 +57,17 @@ class Lockr
       opts.on( '-g', '--genpwd PARAMS', 'generate a random password (based on the optional PARAMS)') do |params|
         options[:generatepwd] = params
       end
+      
+      options[:download] = nil
+      opts.on( '-d', '--download', 'download latest vault from configured sftp location before executing action') do |d|
+        options[:download] = true
+      end
     
+      options[:upload] = nil
+      opts.on( '-u', '--upload', 'upload vault to configured sftp location after executing action') do |d|
+        options[:upload] = true
+      end
+
       # This displays the help screen, all programs are
       # assumed to have this option.
       opts.on( '-h', '--help', 'Display this screen' ) do
@@ -82,9 +94,7 @@ class Lockr
     options
   end
   
-  def merge_config( options)
-    configfile = Configuration.new()
-    
+  def merge_config( configfile, options)
     if configfile.config.nil? 
       return
     end
@@ -138,7 +148,7 @@ class Lockr
     end
   end
   
-  def process_actions( options)
+  def process_actions( configfile, options)
     begin
       case options[:action]
       when 'a', 'add'
@@ -161,6 +171,11 @@ class Lockr
     rescue OpenSSL::Cipher::CipherError
       say( "<%= color('Invalid keyfile', :red) %>")
       exit 42
+    end
+    
+    unless options[:upload].nil?
+      sftp = SFTP.new
+      sftp.upload( configfile, options[:vault])
     end
   end
 end

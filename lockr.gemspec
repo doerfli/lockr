@@ -22,9 +22,11 @@ Gem::Specification.new do |s|
                    'lib/lockr/config.rb',
                    'lib/lockr/pwdgen.rb',
                    'lib/lockr/pwdstore.rb',
+                   'lib/lockr/sftp.rb',
                    'lib/lockr/version.rb']
   s.homepage    = 'http://lockr.byteblues.com/'
   
-  s.add_dependency( 'highline')
-  s.add_dependency( 'bundler')
+  s.add_dependency( 'highline', '>=1.6.13')
+  s.add_dependency( 'bundler', '>=1.1.4')
+  s.add_dependency( 'net-sftp', '>=2.0.5')
 end
