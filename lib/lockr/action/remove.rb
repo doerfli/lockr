@@ -4,7 +4,7 @@ require 'lockr/pwdstore'
 class RemoveAction < AesAction
   
   def initialize(id,username,keyfile,vault)
-    keyfilehash = calculate_hash( keyfile)
+    keyfilehash = calculate_sha512_hash( keyfile)
     pwd_directory = load_from_vault( vault)
     
     unless pwd_directory.has_key?( id)

@@ -3,7 +3,7 @@ require 'lockr/action/aes'
 class ShowAction < AesAction
   
   def initialize(id,username,keyfile, vault)
-    keyfilehash = calculate_hash( keyfile)
+    keyfilehash = calculate_sha512_hash( keyfile)
     
     pwd_directory = load_from_vault( vault)
     

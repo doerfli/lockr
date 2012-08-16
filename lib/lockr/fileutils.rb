@@ -41,4 +41,21 @@ module FileUtils
     
     object
   end
+  
+  # calculate the sha512 hash of a file
+  def calculate_sha512_hash( filename)
+    sha512 = OpenSSL::Digest::SHA512.new
+
+    File.open( filename) do |file|
+      buffer = ''
+
+      # Read the file 512 bytes at a time
+      while not file.eof
+        file.read(512, buffer)
+        sha512.update(buffer)
+      end
+    end
+    
+    sha512.to_s
+  end
 end

@@ -4,7 +4,7 @@ require 'lockr/pwdstore'
 class AddAction < AesAction
   
   def initialize(id,url,username,pwd,keyfile,vault)
-    keyfilehash = calculate_hash( keyfile)
+    keyfilehash = calculate_sha512_hash( keyfile)
     
     pwd_directory = load_from_vault( vault)
     
