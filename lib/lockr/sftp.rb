@@ -1,8 +1,10 @@
 require 'lockr/config'
 require 'net/sftp'
 require 'set'
+require 'lockr/fileutils'
 
 class SFTP
+  include FileUtils
   
   # upload the vault via sftp to the location specified in the configuration
   def upload( config, vault)
@@ -61,7 +63,7 @@ class SFTP
     Net::SFTP.start( cfg_sftp[:hostname], cfg_sftp[:username]) do |sftp|
       
       # TODO check if remote file is same as local (checksum?)
-      # TODO rotate existing local vault before upload
+      rotate_file( vault, 3)
       
       # upload a file or directory to the remote host
       sftp.download!( File.join( cfg_sftp[:directory], File.basename(vault)), vault)
