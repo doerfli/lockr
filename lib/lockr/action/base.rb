@@ -1,7 +1,10 @@
 require 'openssl'
 require 'lockr/encryption/aes'
+require 'lockr/fileutils'
 
 class BaseAction
+  include FileUtils
+  
   def calculate_hash( filename)
     sha512 = OpenSSL::Digest::SHA512.new
 
@@ -19,29 +22,8 @@ class BaseAction
   end
   
   def save_to_vault( storelist, vault)
-    rotate_vault( vault)
-    
-    File.open( vault, 'w') do |f|
-      f.write( storelist.to_yaml)
-    end
-  end
-  
-  def rotate_vault( vault)
-    return unless File.exists?(vault)
-    
-    # move old files first
-    max_files = 2 # = 3 - 1
-    max_files.downto( 0) { |i|
-      
-      if i == 0
-        File.rename( vault, "#{vault}_#{i}")
-      else
-        j = i - 1
-        if File.exists?("#{vault}_#{j}")
-          File.rename( "#{vault}_#{j}", "#{vault}_#{i}")  
-        end
-      end
-    }
+    rotate_file( vault, 3)
+    store_obj_yaml( vault, storelist)
   end
   
   # loads the datastructure for the password sets from the file
@@ -59,13 +41,6 @@ class BaseAction
   # }
   def load_from_vault( vault)
     storelist = {} 
-    
-    if File.exist?( vault)
-      File.open( vault, 'r') do |f|
-        storelist = YAML::load(f)
-      end
-    end
-    
-    storelist
+    load_obj_yaml( vault)
   end
 end
