@@ -13,6 +13,7 @@ module FileUtils
         File.rename( file, "#{file}_#{i}")
       else
         j = i - 1
+        #TODO print output for rename
         if File.exists?("#{file}_#{j}")
           File.rename( "#{file}_#{j}", "#{file}_#{i}")  
         end

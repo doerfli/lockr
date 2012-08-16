@@ -1,20 +1,57 @@
 require 'lockr/config'
 require 'net/sftp'
+require 'set'
 
 class SFTP
   
   # upload the vault via sftp to the location specified in the configuration
   def upload( config, vault)
     cfg_sftp = get_sftp_config( config)
-    
+    remote_file = File.join( cfg_sftp[:directory], File.basename(vault))
     Net::SFTP.start( cfg_sftp[:hostname], cfg_sftp[:username]) do |sftp|
       
-      # TODO rotate existing remote vault before upload
+      # TODO check remote checksum to make sure upload is necessary
+      rotate_sftp_file( sftp, remote_file, 3)
       
       # upload a file or directory to the remote host
-      sftp.upload!( vault, File.join( cfg_sftp[:directory], File.basename(vault)))
+      sftp.upload!( vault, remote_file)
       puts "Uploaded vault to host '#{cfg_sftp[:hostname]}' by SFTP"
     end
+  end
+  
+  # rotate the provided file with a maximum of 'limit' backups
+  # renamed filed will be named file_0, file_1, ...
+  def rotate_sftp_file( sftp, file, limit)
+    files = get_dir_listing( sftp, File.dirname(file))
+    return unless files.include?( File.basename(file))
+    
+    # move old files first
+    max_files = limit - 1 
+    max_files.downto( 0) { |i|
+      
+      if i == 0
+        sftp.rename( file, "#{file}_#{i}")
+      else
+        j = i - 1
+        # TODO check for existence
+        # TODO print output for rename
+        #if File.exists?("#{file}_#{j}")
+          sftp.rename( "#{file}_#{j}", "#{file}_#{i}")  
+        #end
+      end
+    }
+  end  
+  
+  # get the file listing of a remote directory
+  def get_dir_listing( sftp, dir)
+    print dir
+    list = []
+
+    sftp.dir.foreach(dir) do |entry|
+      list << entry.name
+    end
+
+    Set.new(list)
   end
   
   # download the vault via sftp to the location specified in the configuration
