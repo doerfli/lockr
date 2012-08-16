@@ -17,6 +17,36 @@ class SFTP
     end
   end
   
+  # upload the vault via sftp to the location specified in the configuration
+  def upload( config, vault)
+    cfg_sftp = get_sftp_config( config)
+    
+    Net::SFTP.start( cfg_sftp[:hostname], cfg_sftp[:username]) do |sftp|
+      
+      # TODO rotate existing remote vault before upload
+      # TODO check if remote file is same as local (checksum?)
+      
+      # upload a file or directory to the remote host
+      sftp.upload!( vault, File.join( cfg_sftp[:directory], File.basename(vault)))
+      puts "Uploaded vault to host '#{cfg_sftp[:hostname]}' by SFTP"
+    end
+  end
+  
+  # download the vault via sftp to the location specified in the configuration
+  def download( config, vault)
+    cfg_sftp = get_sftp_config( config)
+    
+    Net::SFTP.start( cfg_sftp[:hostname], cfg_sftp[:username]) do |sftp|
+      
+      # TODO check if remote file is same as local (checksum?)
+      # TODO rotate existing local vault before upload
+      
+      # upload a file or directory to the remote host
+      sftp.download!( File.join( cfg_sftp[:directory], File.basename(vault)), vault)
+      puts "Downloaded vault from host '#{cfg_sftp[:hostname]}' by SFTP"
+    end
+  end
+  
   # check config for section lockr and subsection sftp. then check for keys 
   # :hostname, :username and :directory. if anything is missing, raise ArgumentError
   # returns sftp configuration hash

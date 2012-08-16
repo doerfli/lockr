@@ -149,6 +149,11 @@ class Lockr
   end
   
   def process_actions( configfile, options)
+    unless options[:download].nil?
+      sftp = SFTP.new
+      sftp.download( configfile, options[:vault])
+    end
+    
     begin
       case options[:action]
       when 'a', 'add'
