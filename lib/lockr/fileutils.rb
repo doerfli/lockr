@@ -19,6 +19,8 @@ module FileUtils
         end
       end
     }
+    
+    puts "Rotated local vault file(s)"
   end  
   
   # store an object as yaml to file

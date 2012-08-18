@@ -24,8 +24,7 @@ class SFTP
   # rotate the provided file with a maximum of 'limit' backups
   # renamed filed will be named file_0, file_1, ...
   def rotate_sftp_file( sftp, file, limit)
-    files = get_dir_listing( sftp, File.dirname(file))
-    return unless files.include?( File.basename(file))
+    return unless file_exists( sftp, file)
     
     # move old files first
     max_files = limit - 1 
@@ -35,18 +34,22 @@ class SFTP
         sftp.rename( file, "#{file}_#{i}")
       else
         j = i - 1
-        # TODO check for existence
+        next unless file_exists( sftp, "#{file}_#{j}")
         # TODO print output for rename
-        #if File.exists?("#{file}_#{j}")
-          sftp.rename( "#{file}_#{j}", "#{file}_#{i}")  
-        #end
+        sftp.rename( "#{file}_#{j}", "#{file}_#{i}")  
       end
     }
+    
+    puts "Rotated remote vault file(s)"
   end  
+  
+  def file_exists( sftp, file)
+    files = get_dir_listing( sftp, File.dirname(file))
+    files.include?( File.basename(file))
+  end
   
   # get the file listing of a remote directory
   def get_dir_listing( sftp, dir)
-    print dir
     list = []
 
     sftp.dir.foreach(dir) do |entry|
