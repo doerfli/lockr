@@ -35,7 +35,7 @@ module FileUtils
     object = nil
     
     unless File.exist?( file)
-      raise ArgumentError, "file '#{file} does not exist"
+      return {}
     end
     
     File.open( file, 'r') do |f|
