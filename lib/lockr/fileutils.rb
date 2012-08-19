@@ -22,6 +22,7 @@ module FileUtils
     puts "Rotated local vault file(s)"
   end  
   
+  # copy file_src to file_target
   def copy( file_src, file_target)
     return unless File.exists?( file_src)
     

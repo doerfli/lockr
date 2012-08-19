@@ -35,7 +35,6 @@ class SFTP
       else
         j = i - 1
         next unless file_exists( sftp, "#{file}_#{j}")
-        # TODO print output for rename
         sftp.rename( "#{file}_#{j}", "#{file}_#{i}")  
       end
     }
@@ -43,6 +42,7 @@ class SFTP
     puts "Rotated remote vault file(s)"
   end  
   
+  # check if the file exists on the given sftp connection
   def file_exists( sftp, file)
     files = get_dir_listing( sftp, File.dirname(file))
     files.include?( File.basename(file))
