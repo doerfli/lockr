@@ -2,7 +2,7 @@ module FileUtils
   
   # rotate the provided file with a maximum of 'limit' backups
   # renamed filed will be named file_0, file_1, ...
-  def rotate_file( file, limit)
+  def FileUtils.rotate_file( file, limit)
     return unless File.exists?(file)
     
     # move old files first
@@ -10,18 +10,27 @@ module FileUtils
     max_files.downto( 0) { |i|
       
       if i == 0
-        File.rename( file, "#{file}_#{i}")
+        copy( file, "#{file}_#{i}")
       else
         j = i - 1
-        #TODO print output for rename
         if File.exists?("#{file}_#{j}")
-          File.rename( "#{file}_#{j}", "#{file}_#{i}")  
+          copy( "#{file}_#{j}", "#{file}_#{i}")  
         end
       end
     }
     
     puts "Rotated local vault file(s)"
   end  
+  
+  def copy( file_src, file_target)
+    return unless File.exists?( file_src)
+    
+    dst = File.new( file_target, 'w')
+    File.open( file_src, 'r') do |src|
+      dst.write( src.read)
+    end
+    dst.close
+  end
   
   # store an object as yaml to file
   def store_obj_yaml( file, object)

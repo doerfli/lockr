@@ -6,8 +6,6 @@ class BaseAction
   include FileUtils
   
   def save_to_vault( storelist, vault)
-    # TODO don't rotate when vault was just downloaded, as the download also rotates
-    rotate_file( vault, 3)
     store_obj_yaml( vault, storelist)
   end
   

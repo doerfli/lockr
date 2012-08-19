@@ -12,6 +12,7 @@ require 'lockr/config'
 require 'lockr/pwdgen'
 require 'lockr/sftp'
 require 'lockr/version'
+require 'lockr/fileutils'
   
 class Lockr
   
@@ -149,6 +150,9 @@ class Lockr
   end
   
   def process_actions( configfile, options)
+    rotate_required = options[:download].nil? or not %w{a add r remove}.index( options[:action]).nil?
+    FileUtils.rotate_file( options[:vault], 3) if rotate_required
+    
     unless options[:download].nil?
       sftp = SFTP.new
       sftp.download( configfile, options[:vault])
