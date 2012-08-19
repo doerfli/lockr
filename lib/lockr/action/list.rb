@@ -12,7 +12,7 @@ class ListAction < AesAction
         out << "Id: #{id}"
       }
     else
-      keyfilehash = calculate_sha512_hash( keyfile)
+      keyfilehash = FileUtils.calculate_sha512_hash( keyfile)
       pwd_directory.each { |oid,value|
         pwd_directory_id = YAML::load(decrypt( value[:enc], keyfilehash, value[:salt]))
         pwd_directory_id.each { |username, pwdstore|

@@ -6,7 +6,7 @@ class BaseAction
   include FileUtils
   
   def save_to_vault( storelist, vault)
-    store_obj_yaml( vault, storelist)
+    FileUtils.store_obj_yaml( vault, storelist)
   end
   
   # loads the datastructure for the password sets from the file
@@ -23,7 +23,6 @@ class BaseAction
   #   :username => PasswordStore
   # }
   def load_from_vault( vault)
-    storelist = {} 
-    load_obj_yaml( vault)
+    FileUtils.load_obj_yaml( vault)
   end
 end

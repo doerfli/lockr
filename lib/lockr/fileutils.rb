@@ -10,11 +10,11 @@ module FileUtils
     max_files.downto( 0) { |i|
       
       if i == 0
-        copy( file, "#{file}_#{i}")
+        FileUtils.copy( file, "#{file}_#{i}")
       else
         j = i - 1
         if File.exists?("#{file}_#{j}")
-          copy( "#{file}_#{j}", "#{file}_#{i}")  
+          FileUtils.copy( "#{file}_#{j}", "#{file}_#{i}")  
         end
       end
     }
@@ -23,7 +23,7 @@ module FileUtils
   end  
   
   # copy file_src to file_target
-  def copy( file_src, file_target)
+  def FileUtils.copy( file_src, file_target)
     return unless File.exists?( file_src)
     
     dst = File.new( file_target, 'w')
@@ -34,18 +34,18 @@ module FileUtils
   end
   
   # store an object as yaml to file
-  def store_obj_yaml( file, object)
+  def FileUtils.store_obj_yaml( file, object)
     File.open( file, 'w') do |f|
       f.write( object.to_yaml)
     end
   end
   
   # load an yaml object from file
-  def load_obj_yaml( file)
-    object = nil
+  def FileUtils.load_obj_yaml( file)
+    object = {}
     
     unless File.exist?( file)
-      return {}
+      return object
     end
     
     File.open( file, 'r') do |f|
@@ -56,7 +56,7 @@ module FileUtils
   end
   
   # calculate the sha512 hash of a file
-  def calculate_sha512_hash( filename)
+  def FileUtils.calculate_sha512_hash( filename)
     sha512 = OpenSSL::Digest::SHA512.new
 
     File.open( filename) do |file|
