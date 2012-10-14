@@ -64,11 +64,7 @@ class SFTP
     cfg_sftp = get_sftp_config( config)
     
     Net::SFTP.start( cfg_sftp[:hostname], cfg_sftp[:username]) do |sftp|
-      
-      # TODO check if remote file is same as local (checksum?)
-      rotate_file( vault, 3)
-      
-      # upload a file or directory to the remote host
+      # download a file or directory from the remote host
       sftp.download!( File.join( cfg_sftp[:directory], File.basename(vault)), vault)
       puts "Downloaded vault from host '#{cfg_sftp[:hostname]}' by SFTP"
     end
