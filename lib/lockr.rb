@@ -125,6 +125,12 @@ class Lockr
       puts 'Please provide an encryption key file (--keyfile)'
       exit 3
     end
+    
+    # keyfile is required for all actions other than list
+    if ! options[:keyfile].nil? and ! File.exists?( options[:keyfile] )
+      puts 'The provided keyfile does not exist'
+      exit 4
+    end
   end
   
   def acquire_additional_input( options)
