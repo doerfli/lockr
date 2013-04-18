@@ -1,3 +1,5 @@
+require 'yaml'
+
 class Configuration
   CONFIG_FILE = '.lockr'
   attr_reader :config
