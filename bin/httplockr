@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'lockr/http/lockrsvr'
+LockrHttpServer.new()
