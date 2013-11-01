@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.version     = LockrVer::VERSION
   s.date        = LockrVer::DATE
   s.executables << 'lockr'
-  s.summary     = 'Command line based password manager'
-  s.description = 'Lockr is a command line based password manager. Passwords are stored AES-encrypted in a file on your own system.'
+  s.summary     = 'Password manager with local web gui and command line tools'
+  s.description = 'Lockr is a password manager that features a web interface as well as command line function to manage your passwords. Passwords are stored AES-encrypted in a file on your own system and can (if you want) be uploaded to your own "cloud" via ssh.'
   s.authors     = ['Marc Doerflinger']
   s.email       = 'info@byteblues.com'
   s.files       = ['lib/lockr.rb',
