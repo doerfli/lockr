@@ -1,4 +1,4 @@
-require 'httplockr'
+require 'lockr/http/httplockrinit'
 
 init = HttpLockrInit.new()
 init.start()
