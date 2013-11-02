@@ -1,3 +1,5 @@
+require 'yaml'
+
 module FileUtils
   
   # rotate the provided file with a maximum of 'limit' backups
@@ -70,5 +72,26 @@ module FileUtils
     end
     
     sha512.to_s
+  end
+  
+  def save_to_vault( storelist, vault)
+    FileUtils.store_obj_yaml( vault, storelist)
+  end
+  
+  # loads the datastructure for the password sets from the file
+  # it looks like this:
+  #
+  # pwd_directory = { 
+  #   :id => { 
+  #     :enc  => 'encrypted password store list', 
+  #     :salt => 'salt for decryption' 
+  #   } 
+  # }
+  #
+  # decrypted_store_list = {
+  #   :username => PasswordStore
+  # }
+  def load_from_vault( vault)
+    FileUtils.load_obj_yaml( vault)
   end
 end

@@ -1,8 +1,13 @@
 require 'sinatra/base'
+require 'lockr/pwdmgr'
 
 class LockrHttpServer < Sinatra::Base
+  
   get '/' do
-    erb :index
+    # TODO add keyfile
+    mgr = PasswordManager.new( nil, '/Users/moo/Documents/lockr/vault.yaml')
+    entries = mgr.list()
+    erb :index, :locals => { :entries => entries }
   end
   
   # server config
