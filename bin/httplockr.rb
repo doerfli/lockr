@@ -13,7 +13,7 @@ set :port, 32187
 set :views, 'resources/views'
  
 get '/' do
-  entries = settings.pwdmgr.list()
-  erb :index, :locals => { :entries => entries }
+  dir = settings.pwdmgr.list()
+  erb :index, :locals => { :directory => dir }
 end
 

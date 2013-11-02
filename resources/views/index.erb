@@ -14,19 +14,21 @@
             </th>
         </thead>
         <tbody>
-            <% for entry in entries %>
-                <tr>
-                    <td>
-                        <%= entry %>
-                    </td>
-                    <td>
-                        bla
-                    </td>
-                    <td>
-                        &nbsp;
-                    </td>
-                </tr>
-            <% end%>
+            <% for entry in directory.keys() %>
+                <% for store in directory[entry].values() %>
+                    <tr>
+                        <td>
+                            <%= entry %>
+                        </td>
+                        <td>
+                            <%= store.username %>
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                <% end %>
+            <% end %>
         </tbody>
     </table>
 </div>

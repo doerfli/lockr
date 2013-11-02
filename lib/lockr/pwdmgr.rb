@@ -13,15 +13,19 @@ class PasswordManager
   end
   
   def list()
+    return get_vault()
+  end
+  
+  def get_vault()
     pwd_directory = load_from_vault( @vault)
-    out = []
+    keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
+    vault = {}
     
     pwd_directory.each { |id,value|
-      out << id
+      vault[id] = YAML::load(decrypt( value[:enc], keyfilehash, value[:salt]))
     }
     
-    out.sort!
-    return out
+    return vault
   end
   
 end
