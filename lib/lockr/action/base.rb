@@ -3,5 +3,5 @@ require 'lockr/encryption/aes'
 require 'lockr/fileutils'
 
 class BaseAction
-  include FileUtils
+  include LockrFileUtils
 end

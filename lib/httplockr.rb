@@ -4,7 +4,7 @@ require 'lockr/pwdmgr'
     
 class HttpLockr
   
-  def run()
+  def start()
     options = parse_options()
     
     unless options[:keyfile]
@@ -16,10 +16,11 @@ class HttpLockr
     cfg = configfile.config[:lockr]
     options[:vault] = File.expand_path(cfg[:vault]) if options[:vault] == 'vault.yaml'
     
-    mgr = PasswordManager.new( options[:keyfile], cfg[:vault])
+    pwdmgr = PasswordManager.new( options[:keyfile], cfg[:vault])
     
     require 'lockr/http/lockrsvr'
-    LockrHttpServer.new()
+    srv = LockrHttpServer.new()
+    srv.setPwdmgr( pwdmgr)
   end
   
   def parse_options()

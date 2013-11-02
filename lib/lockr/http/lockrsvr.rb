@@ -4,7 +4,8 @@ class LockrHttpServer < Sinatra::Base
   
   get '/' do
     # TODO add keyfile
-    erb :index#, :locals => { :entries => entries }
+    entries = settings.pwdmgr.list()
+    erb :index, :locals => { :entries => entries }
   end
   
   # server config

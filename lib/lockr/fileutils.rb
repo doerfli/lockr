@@ -12,11 +12,11 @@ module LockrFileUtils
     max_files.downto( 0) { |i|
       
       if i == 0
-        FileUtils.copy( file, "#{file}_#{i}")
+        LockrFileUtils.copy( file, "#{file}_#{i}")
       else
         j = i - 1
         if File.exists?("#{file}_#{j}")
-          FileUtils.copy( "#{file}_#{j}", "#{file}_#{i}")  
+          LockrFileUtils.copy( "#{file}_#{j}", "#{file}_#{i}")  
         end
       end
     }
@@ -75,7 +75,7 @@ module LockrFileUtils
   end
   
   def save_to_vault( storelist, vault)
-    FileUtils.store_obj_yaml( vault, storelist)
+    LockrFileUtils.store_obj_yaml( vault, storelist)
   end
   
   # loads the datastructure for the password sets from the file
@@ -92,6 +92,6 @@ module LockrFileUtils
   #   :username => PasswordStore
   # }
   def load_from_vault( vault)
-    FileUtils.load_obj_yaml( vault)
+    LockrFileUtils.load_obj_yaml( vault)
   end
 end

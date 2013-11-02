@@ -7,6 +7,7 @@ class PasswordManager
   include LockrFileUtils
   
   def initialize( keyfile, vault)
+    puts "Initializing Password manager module. Vault: '#{vault}', Keyfile: '...'"
     @vault = vault
     @keyfile = keyfile
   end

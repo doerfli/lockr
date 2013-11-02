@@ -2,4 +2,4 @@
 
 require 'httplockr'
 lockr = HttpLockr.new()
-lockr.run()
+lockr.start()
