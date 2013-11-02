@@ -2,12 +2,31 @@
 
 <div class="entries">
     <table class="entrytable">
-        <% for entry in entries %>
-            <tr>
-                <td>
-                    <%= entry %>
-                </td>
-            </tr>
-        <% end%>
+        <thead>
+            <th>
+                Site ID
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Function
+            </th>
+        </thead>
+        <tbody>
+            <% for entry in entries %>
+                <tr>
+                    <td>
+                        <%= entry %>
+                    </td>
+                    <td>
+                        bla
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+            <% end%>
+        </tbody>
     </table>
 </div>

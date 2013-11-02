@@ -1,3 +1,31 @@
 body {
     font-family: 'Droid Sans', sans-serif;  
 }
+
+div.center {
+    width: 640px;
+    margin: auto;
+}
+
+tr.odd {
+    background-color: #E2EFFF; 
+}
+
+tr.even {
+    background-color: #aed0ea;
+}
+
+table.entrytable .css_right
+{
+    /* adding this keeps the sort icon on the same level as the label */
+    float:right;
+}
+
+div.dataTables_info, div.dataTables_filter
+{
+    padding: 5px;
+}
+
+table.dataTable td, table.dataTable th {
+    padding: 3px;
+}
