@@ -1,10 +1,10 @@
 require 'yaml'
 
-module FileUtils
+module LockrFileUtils
   
   # rotate the provided file with a maximum of 'limit' backups
   # renamed filed will be named file_0, file_1, ...
-  def FileUtils.rotate_file( file, limit)
+  def LockrFileUtils.rotate_file( file, limit)
     return unless File.exists?(file)
     
     # move old files first
@@ -25,7 +25,7 @@ module FileUtils
   end  
   
   # copy file_src to file_target
-  def FileUtils.copy( file_src, file_target)
+  def LockrFileUtils.copy( file_src, file_target)
     return unless File.exists?( file_src)
     
     dst = File.new( file_target, 'w')
@@ -36,14 +36,14 @@ module FileUtils
   end
   
   # store an object as yaml to file
-  def FileUtils.store_obj_yaml( file, object)
+  def LockrFileUtils.store_obj_yaml( file, object)
     File.open( file, 'w') do |f|
       f.write( object.to_yaml)
     end
   end
   
   # load an yaml object from file
-  def FileUtils.load_obj_yaml( file)
+  def LockrFileUtils.load_obj_yaml( file)
     object = {}
     
     unless File.exist?( file)
@@ -58,7 +58,7 @@ module FileUtils
   end
   
   # calculate the sha512 hash of a file
-  def FileUtils.calculate_sha512_hash( filename)
+  def LockrFileUtils.calculate_sha512_hash( filename)
     sha512 = OpenSSL::Digest::SHA512.new
 
     File.open( filename) do |file|

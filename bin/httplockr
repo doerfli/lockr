@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'lockr/http/lockrsvr'
-LockrHttpServer.new()
+require 'httplockr'
+lockr = HttpLockr.new()
+lockr.run()

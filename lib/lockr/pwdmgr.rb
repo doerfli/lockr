@@ -4,10 +4,9 @@ require 'lockr/fileutils'
 
 class PasswordManager
   include Aes
-  include FileUtils
+  include LockrFileUtils
   
   def initialize( keyfile, vault)
-    puts 'hello world'
     @vault = vault
     @keyfile = keyfile
   end
