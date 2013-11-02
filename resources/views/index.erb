@@ -24,7 +24,7 @@
                             <%= store.username %>
                         </td>
                         <td>
-                            &nbsp;
+                            <a href="/copypwd?id=<%= u(entry) %>&amp;username=<%= u(store.username) %>" class="button">Copy password</button>
                         </td>
                     </tr>
                 <% end %>

@@ -1,4 +1,8 @@
 require 'lockr/http/httplockrinit'
+require 'erb'
+require 'clipboard'  
+
+include ERB::Util
 
 init = HttpLockrInit.new()
 init.start()
@@ -17,3 +21,10 @@ get '/' do
   erb :index, :locals => { :directory => dir }
 end
 
+get '/copypwd' do
+  dir = settings.pwdmgr.list()
+  id = params[:id]
+  username = params[:username]
+  pwd = Clipboard.copy dir[id][username].password
+  redirect '/'
+end

@@ -1,5 +1,6 @@
 body {
     font-family: 'Droid Sans', sans-serif;  
+    font-size: medium;
 }
 
 div.center {
@@ -28,4 +29,9 @@ div.dataTables_info, div.dataTables_filter
 
 table.dataTable td, table.dataTable th {
     padding: 3px;
+}
+
+.ui-button {
+    font-size: medium;
+    font-weight: normal;
 }

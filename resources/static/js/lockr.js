@@ -8,4 +8,6 @@ $(document).ready(function() {
           { "sWidth": "200px" }
         ]
     });
+    
+    $( "a.button" ).button();
 } );
