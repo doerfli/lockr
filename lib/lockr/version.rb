@@ -1,4 +1,4 @@
 module LockrVer
-  VERSION = "0.4.4"
-  DATE = "2013-04-18"
+  VERSION = "0.4.5"
+  DATE = "2013-11-02"
 end
