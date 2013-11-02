@@ -2,25 +2,25 @@ require 'optparse'
 require 'lockr/config'
 require 'lockr/pwdmgr'
     
-class HttpLockr
+class HttpLockrInit
   
   def start()
     options = parse_options()
     
     unless options[:keyfile]
       puts 'Please provide a keyfile'
-      return
+      raise ArgumentError
     end
     
     configfile = Configuration.new()
     cfg = configfile.config[:lockr]
     options[:vault] = File.expand_path(cfg[:vault]) if options[:vault] == 'vault.yaml'
     
-    pwdmgr = PasswordManager.new( options[:keyfile], cfg[:vault])
-    
-    require 'lockr/http/lockrsvr'
-    srv = LockrHttpServer.new()
-    srv.setPwdmgr( pwdmgr)
+    @pwdmgr = PasswordManager.new( options[:keyfile], options[:vault])
+  end
+  
+  def getPwdMgr
+    return @pwdmgr
   end
   
   def parse_options()

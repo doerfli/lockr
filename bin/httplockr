@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require 'httplockr'
-lockr = HttpLockr.new()
-lockr.start()

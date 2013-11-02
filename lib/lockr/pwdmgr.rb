@@ -13,13 +13,10 @@ class PasswordManager
   end
   
   def list()
-    puts @vault
     pwd_directory = load_from_vault( @vault)
-    puts pwd_directory
     out = []
     
     pwd_directory.each { |id,value|
-      puts id
       out << id
     }
     
