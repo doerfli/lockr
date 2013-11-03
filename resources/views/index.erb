@@ -1,5 +1,8 @@
 <h1>Lockr password manager</h1>
 
+<div class="spacebelow">
+    <a id="addnew" class="button">Add new site</a>
+</div>
 <div class="entries">
     <table class="entrytable">
         <thead>
@@ -24,11 +27,13 @@
                             <%= store.username %>
                         </td>
                         <td>
-                            <a href="/copypwd?id=<%= u(entry) %>&amp;username=<%= u(store.username) %>" class="button">Copy password</button>
+                            <a href="/copypwd?id=<%= u(entry) %>&amp;username=<%= u(store.username) %>" class="button">Copy password</a>
                         </td>
                     </tr>
                 <% end %>
             <% end %>
         </tbody>
     </table>
+    
+    <%= erb(:addnewsite, :layout => false) %>
 </div>

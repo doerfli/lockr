@@ -9,7 +9,7 @@ class PasswordManager
   
   def initialize( keyfile, vault)
     puts "Initializing Password manager module. Vault: '#{vault}', Keyfile: '...'"
-    @vault = vault
+    @vault_file = vault
     @keyfile = keyfile
     @scheduler = Rufus::Scheduler.new
   end
@@ -36,8 +36,31 @@ class PasswordManager
     end
   end
   
+  def add( id, username, password)
+    LockrFileUtils.rotate_file( @vault_file, 3)
+    keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
+    vault = load_from_vault( @vault_file)
+    
+    # get site directory
+    if vault.has_key?( id)
+      site_dir = YAML::load(decrypt( vault[id][:enc], keyfilehash, vault[id][:salt]))
+    else
+      site_dir = {}
+    end
+    
+    # TODO add url
+    new_store = PasswordStore.new( id, nil, username, password)
+    site_dir[username] = new_store
+    
+    vault[id] = {}
+    vault[id][:enc], vault[id][:salt] = encrypt( site_dir.to_yaml, keyfilehash)
+    
+    save_to_vault( vault, @vault_file)
+    puts 'Added new id/username combination to vault'
+  end
+  
   def get_vault()
-    pwd_directory = load_from_vault( @vault)
+    pwd_directory = load_from_vault( @vault_file)
     keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
     vault = {}
     

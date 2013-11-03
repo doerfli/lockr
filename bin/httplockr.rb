@@ -28,3 +28,12 @@ get '/copypwd' do
   settings.pwdmgr.copy_password( id, username)
   redirect '/'
 end
+
+post '/add' do
+  id = params[:id]
+  username = params[:username]
+  password = params[:password]
+  newPwdstore = settings.pwdmgr.add( id, username, password)
+  dir = settings.pwdmgr.list()
+  erb :index, :locals => { :directory => dir, :created => newPwdstore }
+end
