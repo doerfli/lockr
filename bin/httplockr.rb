@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'lockr/http/httplockrinit'
 require 'erb'
 require 'clipboard'  
