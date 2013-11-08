@@ -37,7 +37,7 @@ post '/password' do
   password = params[:password]
   newPwdstore = settings.pwdmgr.add( id, username, password)
   dir = settings.pwdmgr.list()
-  erb :index, :locals => { :directory => dir, :created => newPwdstore }
+  redirect '/'
 end
 
 patch '/password' do
