@@ -26,4 +26,5 @@ Gem::Specification.new do |s|
   s.add_dependency( "clipboard", "~> 1.0.5")
   s.add_dependency( "rufus-scheduler", "~> 3.0.2")
   s.add_dependency( "padrino-helpers", "~> 0.11.4")
+  s.add_dependency( 'browser_gui', "~>0.1.0")
 end

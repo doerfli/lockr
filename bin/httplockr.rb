@@ -12,6 +12,11 @@ init.start()
 
 # now start sinatra
 require 'sinatra'
+
+if init.getLoadBrowser
+  require "browser_gui"  
+end
+
 register Padrino::Helpers
 
 set :pwdmgr, init.getPwdMgr()

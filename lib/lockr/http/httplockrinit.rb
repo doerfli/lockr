@@ -17,10 +17,15 @@ class HttpLockrInit
     options[:vault] = File.expand_path(cfg[:vault]) if options[:vault] == 'vault.yaml'
     
     @pwdmgr = PasswordManager.new( options[:keyfile], options[:vault])
+    @load_browser = options[:browser]
   end
   
   def getPwdMgr
     return @pwdmgr
+  end
+  
+  def getLoadBrowser
+    return @load_browser
   end
   
   def parse_options()
@@ -39,6 +44,11 @@ class HttpLockrInit
       options[:vault] = 'vault.yaml'
       opts.on( '-v', '--vault FILE', 'FILE is the name of the vault to store the password sets') do |file|
         options[:vault] = File.expand_path(file)
+      end
+      
+      options[:browser] = false
+      opts.on( '-b', '--browser', 'open browser windows for lockr') do |d|
+        options[:browser] = true
       end
       
       # This displays the help screen, all programs are
