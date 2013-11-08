@@ -37,39 +37,29 @@ class PasswordManager
   end
   
   def change_password( id, username, password)
-    ###TODO better encryption code for vault
-    LockrFileUtils.rotate_file( @vault_file, 3)
-    keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
-    vault = load_from_vault( @vault_file)
-    site_dir = YAML::load(decrypt( vault[id][:enc], keyfilehash, vault[id][:salt]))
+    vault = get_vault()
+    site_dir = vault[id]
     site_dir[username].password = password
-    vault[id][:enc], vault[id][:salt] = encrypt( site_dir.to_yaml, keyfilehash)
     
-    save_to_vault( vault, @vault_file)
+    store_vault( vault)
     puts 'Change password and saved to vault'
   end
   
   def add( id, username, password)
-    LockrFileUtils.rotate_file( @vault_file, 3)
-    # ###TODO strange ... use getvault()
-    keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
-    vault = load_from_vault( @vault_file)
+    vault = get_vault()
+    site_dir = {}
     
     # get site directory
     if vault.has_key?( id)
-      site_dir = YAML::load(decrypt( vault[id][:enc], keyfilehash, vault[id][:salt]))
-    else
-      site_dir = {}
+      site_dir = vault[id]
     end
     
     # TODO add url
     new_store = PasswordStore.new( id, nil, username, password)
     site_dir[username] = new_store
+    vault[id] = site_dir
     
-    vault[id] = {}
-    vault[id][:enc], vault[id][:salt] = encrypt( site_dir.to_yaml, keyfilehash)
-    
-    save_to_vault( vault, @vault_file)
+    store_vault( vault)
     puts 'Added new id/username combination to vault'
   end
   
@@ -78,11 +68,26 @@ class PasswordManager
     keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
     vault = {}
     
-    pwd_directory.each { |id,value|
-      vault[id] = YAML::load(decrypt( value[:enc], keyfilehash, value[:salt]))
+    pwd_directory.each { |id,site_dir_enc|
+      vault[id] = YAML::load(decrypt( site_dir_enc[:enc], keyfilehash, site_dir_enc[:salt]))
     }
     
     return vault
+  end
+  
+  def store_vault( vault)
+    LockrFileUtils.rotate_file( @vault_file, 3)
+    keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
+    
+    pwd_directory = {}
+    
+    vault.each { |id, site_dir_dec|
+      pwd_directory[id] = {}
+      pwd_directory[id][:enc], pwd_directory[id][:salt] = encrypt( site_dir_dec.to_yaml, keyfilehash)  
+    }    
+
+    save_to_vault( pwd_directory, @vault_file)
+    puts 'Vault saved'
   end
   
 end
