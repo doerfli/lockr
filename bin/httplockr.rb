@@ -27,27 +27,11 @@ end
 get '/password' do
   id = params[:id]
   username = params[:username]
-  settings.pwdmgr.copy_password( id, username)
+  settings.pwdmgr.copy_to_clipboard( id, username)
   redirect '/'
 end
 
-patch '/password' do
-  id = params[:id]
-  username = params[:username]
-  password = params[:password]
-  settings.pwdmgr.change_password( id, username, password)
-  redirect '/'
-end
-
-delete '/password' do
-  id = params[:id]
-  username = params[:username]
-  settings.pwdmgr.delete_password( id, username)
-  redirect '/'
-end
-
-
-post '/add' do
+post '/password' do
   id = params[:id]
   username = params[:username]
   password = params[:password]
@@ -55,3 +39,19 @@ post '/add' do
   dir = settings.pwdmgr.list()
   erb :index, :locals => { :directory => dir, :created => newPwdstore }
 end
+
+patch '/password' do
+  id = params[:id]
+  username = params[:username]
+  password = params[:password]
+  settings.pwdmgr.change( id, username, password)
+  redirect '/'
+end
+
+delete '/password' do
+  id = params[:id]
+  username = params[:username]
+  settings.pwdmgr.delete( id, username)
+  redirect '/'
+end
+

@@ -20,7 +20,7 @@ class PasswordManager
     return decrypt_vault()
   end
   
-  def copy_password( id, username)
+  def copy_to_clipboard( id, username)
     vault = decrypt_vault()
     
     Clipboard.copy vault[id][username].password
@@ -42,16 +42,16 @@ class PasswordManager
     end
   end
   
-  def change_password( id, username, password)
+  def change( id, username, password)
     vault = decrypt_vault()
     site_dir = vault[id]
     site_dir[username].password = password
     
     encrypt_vault( vault)
-    puts 'Changed password and saved to vault'
+    puts 'Changed password'
   end
   
-  def delete_password( id, username)
+  def delete( id, username)
     vault = decrypt_vault()
     site_dir = vault[id]
     
@@ -62,7 +62,7 @@ class PasswordManager
     end
     
     encrypt_vault( vault)
-    puts 'Deleted password and saved to vault'
+    puts 'Deleted password'
   end
   
   def add( id, username, password)
@@ -80,8 +80,10 @@ class PasswordManager
     vault[id] = site_dir
     
     encrypt_vault( vault)
-    puts 'Added new id/username combination to vault'
+    puts 'Added new id/username combination'
   end
+  
+private
   
   def decrypt_vault()
     pwd_directory = load_from_vault( @vault_file)
