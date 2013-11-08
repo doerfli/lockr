@@ -18,23 +18,36 @@
         </thead>
         <tbody>
             <% for entry in directory.keys() %>
-                <% for store in directory[entry].values() %>
+                <% if directory[entry] %>
+                    <% for store in directory[entry].values() %>
+                        <tr>
+                            <td>
+                                <%= entry %>
+                            </td>
+                            <td>
+                                <%= store.username %>
+                            </td>
+                            <td>
+                                <input type="hidden" class="id" value="<%= entry %>"/>
+                                <input type="hidden" class="username" value="<%= store.username %>"/>
+                                <a href="/password?id=<%= u(entry) %>&amp;username=<%= u(store.username) %>" class="button">Copy</a>
+                                <a id="changepwd" class="button">Change</a>
+                                <a id="deletepwd" class="button">Delete</a>                            
+                            </td>
+                        </tr>
+                    <% end %>
+                <% else %>
                     <tr>
                         <td>
                             <%= entry %>
                         </td>
                         <td>
-                            <%= store.username %>
+                            Unable to decrypt
                         </td>
                         <td>
-                            <input type="hidden" class="id" value="<%= entry %>"/>
-                            <input type="hidden" class="username" value="<%= store.username %>"/>
-                            <a href="/password?id=<%= u(entry) %>&amp;username=<%= u(store.username) %>" class="button">Copy</a>
-                            <a id="changepwd" class="button">Change</a>
-                            <a id="deletepwd" class="button">Delete</a>                            
+                            &nbsp;
                         </td>
-                    </tr>
-                <% end %>
+                <% end%>
             <% end %>
         </tbody>
     </table>

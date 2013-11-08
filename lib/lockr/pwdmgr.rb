@@ -91,7 +91,12 @@ private
     vault = {}
     
     pwd_directory.each { |id,site_dir_enc|
-      vault[id] = YAML::load(decrypt( site_dir_enc[:enc], keyfilehash, site_dir_enc[:salt]))
+      begin
+        vault[id] = YAML::load(decrypt( site_dir_enc[:enc], keyfilehash, site_dir_enc[:salt]))
+      rescue OpenSSL::Cipher::CipherError
+        # could not decrypt
+        vault[id] = nil
+      end
     }
     
     return vault
