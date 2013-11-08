@@ -24,7 +24,7 @@ get '/' do
   erb :index, :locals => { :directory => dir }
 end
 
-get '/copypwd' do
+get '/password' do
   id = params[:id]
   username = params[:username]
   settings.pwdmgr.copy_password( id, username)
