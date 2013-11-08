@@ -81,6 +81,7 @@ class PasswordManager
     
     encrypt_vault( vault)
     puts 'Added new id/username combination'
+    return new_store
   end
   
 private

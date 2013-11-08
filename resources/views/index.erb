@@ -20,21 +20,7 @@
             <% for entry in directory.keys() %>
                 <% if directory[entry] %>
                     <% for store in directory[entry].values() %>
-                        <tr>
-                            <td>
-                                <%= entry %>
-                            </td>
-                            <td>
-                                <%= store.username %>
-                            </td>
-                            <td>
-                                <input type="hidden" class="id" value="<%= entry %>"/>
-                                <input type="hidden" class="username" value="<%= store.username %>"/>
-                                <a href="/password?id=<%= u(entry) %>&amp;username=<%= u(store.username) %>" class="button">Copy</a>
-                                <a id="changepwd" class="button">Change</a>
-                                <a id="deletepwd" class="button">Delete</a>                            
-                            </td>
-                        </tr>
+                        <%= erb :entryrow, :locals => { :store => store } %>
                     <% end %>
                 <% else %>
                     <tr>

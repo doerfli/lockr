@@ -1,0 +1,15 @@
+<tr>
+    <td>
+        <%= store.id %>
+    </td>
+    <td>
+        <%= store.username %>
+    </td>
+    <td>
+        <input type="hidden" class="id" value="<%= store.id %>"/>
+        <input type="hidden" class="username" value="<%= store.username %>"/>
+        <a href="/password?id=<%= u(store.id) %>&amp;username=<%= u(store.username) %>" class="button">Copy</a>
+        <a id="changepwd" class="button">Change</a>
+        <a id="deletepwd" class="button">Delete</a>                            
+    </td>
+</tr>

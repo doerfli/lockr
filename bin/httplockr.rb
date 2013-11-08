@@ -3,7 +3,7 @@
 require 'lockr/http/httplockrinit'
 require 'erb'
 require 'clipboard'  
-
+require 'padrino-helpers'
 
 include ERB::Util
 
@@ -12,6 +12,7 @@ init.start()
 
 # now start sinatra
 require 'sinatra'
+register Padrino::Helpers
 
 set :pwdmgr, init.getPwdMgr()
 # server config
