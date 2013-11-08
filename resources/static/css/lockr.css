@@ -42,17 +42,17 @@ table.dataTable td, table.dataTable th {
     margin-bottom: 20px;
 }
 
-div#dialog-addnewsite label, div#dialog-addnewsite input { 
+div.dialog label, div.dialog input { 
     display:block; 
 }
 
-div#dialog-addnewsite input.text { 
+div.dialog input.text { 
     margin-bottom:12px; 
     width:95%; 
     padding: .4em; 
 }
 
-div#dialog-addnewsite fieldset { 
+div.dialog fieldset { 
     padding:0; 
     border:0; 
     margin-top:25px; 

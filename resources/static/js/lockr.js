@@ -33,4 +33,34 @@ $(document).ready(function() {
           $("dialog-addnewsite input").each().val( "" ).removeClass( "ui-state-error" );
       }
     });
-} );
+    
+    $( "a#changepwd").click( function() {
+        var id = $( this).siblings( ".id").get(0).value;
+        var username = $( this).siblings( ".username").get(0).value;
+        $("#dialog-changepwd #siteid").attr('value', id);
+        $("#dialog-changepwd #username").attr('value', username);
+        $("#dialog-changepwd #siteid_label").html( id);
+        $("#dialog-changepwd #username_label").html( username);
+        $( "#dialog-changepwd" ).dialog( "open" );
+    });
+    
+    $( "#dialog-changepwd" ).dialog({
+      autoOpen: false,
+      height: 400,
+      width: 400,
+      modal: true,
+      buttons: {
+        "Save": function() {
+          $( "form#form-change").submit();
+        },
+        "Cancel": function() {
+          $( this ).dialog( "close" );
+        }
+      },
+      close: function() {
+          // clean all fields
+          $("dialog-changepwd input").each().val( "" ).removeClass( "ui-state-error" );
+      }
+    });
+    
+});

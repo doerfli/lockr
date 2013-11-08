@@ -31,6 +31,16 @@ get '/password' do
   redirect '/'
 end
 
+patch '/password' do
+  puts params
+  id = params[:siteid]
+  username = params[:username]
+  password = params[:password]
+  puts id
+  settings.pwdmgr.change_password( id, username, password)
+  redirect '/'
+end
+
 post '/add' do
   id = params[:id]
   username = params[:username]

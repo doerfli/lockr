@@ -1,0 +1,15 @@
+<div id="dialog-changepwd" title="Change password" class="dialog">
+  <form id="form-change" action="/password" method="post">
+      <input type="hidden" name="_method" value="PATCH"/>
+      <input type="hidden" name="siteid" id="siteid"/>
+      <input type="hidden" name="username" id="username"/>
+      <fieldset>
+        <label for="name">Site-ID</label>
+        <label><span id="siteid_label"></span></label>
+        <label for="username">Username</label>
+        <label><span id="username_label"></span></label>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all" />
+      </fieldset>
+  </form>
+</div>

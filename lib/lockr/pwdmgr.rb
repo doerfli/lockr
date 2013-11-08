@@ -36,8 +36,22 @@ class PasswordManager
     end
   end
   
+  def change_password( id, username, password)
+    ###TODO better encryption code for vault
+    LockrFileUtils.rotate_file( @vault_file, 3)
+    keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
+    vault = load_from_vault( @vault_file)
+    site_dir = YAML::load(decrypt( vault[id][:enc], keyfilehash, vault[id][:salt]))
+    site_dir[username].password = password
+    vault[id][:enc], vault[id][:salt] = encrypt( site_dir.to_yaml, keyfilehash)
+    
+    save_to_vault( vault, @vault_file)
+    puts 'Change password and saved to vault'
+  end
+  
   def add( id, username, password)
     LockrFileUtils.rotate_file( @vault_file, 3)
+    # ###TODO strange ... use getvault()
     keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
     vault = load_from_vault( @vault_file)
     
