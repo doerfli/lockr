@@ -15,11 +15,11 @@ class PasswordManager
   end
   
   def list()
-    return get_vault()
+    return decrypt_vault()
   end
   
   def copy_password( id, username)
-    vault = get_vault()
+    vault = decrypt_vault()
     
     Clipboard.copy vault[id][username].password
     puts 'Password copied to clipboard'
@@ -37,16 +37,16 @@ class PasswordManager
   end
   
   def change_password( id, username, password)
-    vault = get_vault()
+    vault = decrypt_vault()
     site_dir = vault[id]
     site_dir[username].password = password
     
-    store_vault( vault)
+    encrypt_vault( vault)
     puts 'Change password and saved to vault'
   end
   
   def add( id, username, password)
-    vault = get_vault()
+    vault = decrypt_vault()
     site_dir = {}
     
     # get site directory
@@ -59,11 +59,11 @@ class PasswordManager
     site_dir[username] = new_store
     vault[id] = site_dir
     
-    store_vault( vault)
+    encrypt_vault( vault)
     puts 'Added new id/username combination to vault'
   end
   
-  def get_vault()
+  def decrypt_vault()
     pwd_directory = load_from_vault( @vault_file)
     keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
     vault = {}
@@ -75,7 +75,7 @@ class PasswordManager
     return vault
   end
   
-  def store_vault( vault)
+  def encrypt_vault( vault)
     LockrFileUtils.rotate_file( @vault_file, 3)
     keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
     
