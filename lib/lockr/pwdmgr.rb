@@ -25,8 +25,12 @@ class PasswordManager
     puts 'Password copied to clipboard'
     
     if @job != nil
-      @scheduler.unschedule( @job)
-      puts 'Unscheduled old clear task' 
+      begin
+        @scheduler.unschedule( @job)
+        puts 'Unscheduled old clear task'
+      rescue ArgumentError
+        # job no longer active
+      end 
     end
     
     puts 'Scheduling clipboard reset in 15 seconds'
