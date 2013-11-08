@@ -39,6 +39,14 @@ patch '/password' do
   redirect '/'
 end
 
+delete '/password' do
+  id = params[:id]
+  username = params[:username]
+  settings.pwdmgr.delete_password( id, username)
+  redirect '/'
+end
+
+
 post '/add' do
   id = params[:id]
   username = params[:username]

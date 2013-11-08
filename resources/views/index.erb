@@ -30,7 +30,8 @@
                             <input type="hidden" class="id" value="<%= entry %>"/>
                             <input type="hidden" class="username" value="<%= store.username %>"/>
                             <a href="/password?id=<%= u(entry) %>&amp;username=<%= u(store.username) %>" class="button">Copy password</a>
-                            <a id="changepwd" class="button">Change password</a>                            
+                            <a id="changepwd" class="button">Change password</a>
+                            <a id="deletepwd" class="button">Delete password</a>                            
                         </td>
                     </tr>
                 <% end %>
@@ -40,4 +41,5 @@
     
     <%= erb(:addnewsite, :layout => false) %>
     <%= erb(:changepwd, :layout => false) %>
+    <%= erb(:deletepwd, :layout => false) %>
 </div>

@@ -7,6 +7,8 @@ class PasswordManager
   include Aes
   include LockrFileUtils
   
+  NUM_BACKUP_FILES = 3
+  
   def initialize( keyfile, vault)
     puts "Initializing Password manager module. Vault: '#{vault}', Keyfile: '...'"
     @vault_file = vault
@@ -46,7 +48,21 @@ class PasswordManager
     site_dir[username].password = password
     
     encrypt_vault( vault)
-    puts 'Change password and saved to vault'
+    puts 'Changed password and saved to vault'
+  end
+  
+  def delete_password( id, username)
+    vault = decrypt_vault()
+    site_dir = vault[id]
+    
+    site_dir.delete( username)
+    
+    if ( site_dir.size == 0 )
+      vault.delete( id)
+    end
+    
+    encrypt_vault( vault)
+    puts 'Deleted password and saved to vault'
   end
   
   def add( id, username, password)
@@ -80,7 +96,7 @@ class PasswordManager
   end
   
   def encrypt_vault( vault)
-    LockrFileUtils.rotate_file( @vault_file, 3)
+    LockrFileUtils.rotate_file( @vault_file, NUM_BACKUP_FILES)
     keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
     
     pwd_directory = {}

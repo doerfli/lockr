@@ -1,0 +1,13 @@
+<div id="dialog-deletepwd" title="Delete password" class="dialog">
+  <form id="form-delete" action="/password" method="post">
+      <input type="hidden" name="_method" value="DELETE"/>
+      <input type="hidden" name="id" id="id"/>
+      <input type="hidden" name="username" id="username"/>
+      <fieldset>
+        <label for="name">Site-ID</label>
+        <label class="labelfield ui-widget-content ui-corner-all"><span id="id_label"></span></label>
+        <label for="username">Username</label>
+        <label class="labelfield ui-widget-content ui-corner-all"><span id="username_label"></span></label>
+      </fieldset>
+  </form>
+</div>
