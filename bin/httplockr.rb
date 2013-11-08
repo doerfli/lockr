@@ -22,6 +22,7 @@ register Padrino::Helpers
 set :pwdmgr, init.getPwdMgr()
 # server config
 set :public_dir, 'resources/static'
+set :bind, '127.0.0.1'
 set :port, 32187
 set :views, 'resources/views'
  
