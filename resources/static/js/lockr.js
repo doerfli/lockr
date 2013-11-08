@@ -37,9 +37,9 @@ $(document).ready(function() {
     $( "a#changepwd").click( function() {
         var id = $( this).siblings( ".id").get(0).value;
         var username = $( this).siblings( ".username").get(0).value;
-        $("#dialog-changepwd #siteid").attr('value', id);
+        $("#dialog-changepwd #id").attr('value', id);
+        $("#dialog-changepwd #id_label").html( id);
         $("#dialog-changepwd #username").attr('value', username);
-        $("#dialog-changepwd #siteid_label").html( id);
         $("#dialog-changepwd #username_label").html( username);
         $( "#dialog-changepwd" ).dialog( "open" );
     });
