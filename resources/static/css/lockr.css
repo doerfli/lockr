@@ -52,6 +52,13 @@ div.dialog input.text {
     padding: .4em; 
 }
 
+div.dialog label.labelfield { 
+    margin-bottom:12px; 
+    width:95%; 
+    padding: .4em; 
+    background-color: 
+}
+
 div.dialog fieldset { 
     padding:0; 
     border:0; 
