@@ -88,7 +88,12 @@ private
   
   def decrypt_vault()
     pwd_directory = load_from_vault( @vault_file)
-    keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
+    keyfilehash = '00000000' # initialize with dummy hash
+    
+    if ( @keyfile != nil )
+      keyfilehash = LockrFileUtils.calculate_sha512_hash( @keyfile)
+    end
+    
     vault = {}
     
     pwd_directory.each { |id,site_dir_enc|
