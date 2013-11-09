@@ -1,5 +1,4 @@
 require 'lockr/action/aes'
-require 'lockr/pwdstore'
 
 class ListAction < AesAction
   
