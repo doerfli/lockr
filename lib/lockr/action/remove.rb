@@ -1,7 +1,6 @@
-require 'lockr/action/aes'
-require 'lockr/pwdstore'
+require 'lockr/action/base'
 
-class RemoveAction < AesAction
+class RemoveAction < BaseAction
   
   def initialize(id,username,keyfile,vault)
     keyfilehash = LockrFileUtils.calculate_sha512_hash( keyfile)

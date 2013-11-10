@@ -1,7 +1,7 @@
-require 'openssl'
-require 'lockr/encryption/aes'
-require 'lockr/fileutils'
+require 'lockr/pwdmgr'
 
 class BaseAction
-  include LockrFileUtils
+  def initialize( keyfile, vault)
+    @pwdmgr = PasswordManager.new( keyfile, vault)
+  end
 end

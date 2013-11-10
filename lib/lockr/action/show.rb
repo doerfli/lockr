@@ -1,6 +1,6 @@
-require 'lockr/action/aes'
+require 'lockr/action/base'
 
-class ShowAction < AesAction
+class ShowAction < BaseAction
   
   def initialize(id, username, keyfile, vault)
     super( keyfile, vault)

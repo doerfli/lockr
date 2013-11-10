@@ -1,7 +1,6 @@
-require 'lockr/action/aes'
-require 'lockr/pwdstore'
+require 'lockr/action/base'
 
-class AddAction < AesAction
+class AddAction < BaseAction
   
   def initialize(id,url,username,pwd,keyfile,vault)
     keyfilehash = LockrFileUtils.calculate_sha512_hash( keyfile)
