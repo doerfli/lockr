@@ -25,6 +25,7 @@ set :public_dir, 'resources/static'
 set :bind, '127.0.0.1'
 set :port, 32187
 set :views, 'resources/views'
+enable :run
  
 get '/' do
   dir = settings.pwdmgr.list()
