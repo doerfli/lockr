@@ -135,21 +135,21 @@ class Lockr
   def acquire_additional_input( options)
     # id is required for all actions except list
     while options[:id].nil? and %w{ l list}.index( options[:action]).nil?
-      options[:id] = ask("Id?  ") { |q| }
+      options[:id] = ask("Id?  ") { |q| }.to_s
       options[:id] = nil if options[:id].strip() == '' 
     end
     
     # username is required for actions add, remove
     actions_requiring_username = %w{ a add r remove}
     while options[:username].nil? and not actions_requiring_username.index( options[:action]).nil?
-      options[:username] = ask("Username?  ") { |q| }
+      options[:username] = ask("Username?  ") { |q| }.to_s
       options[:username] = nil if options[:username].strip == ''
     end
     
     # url is optional for add
     actions_requiring_url = %w{ a add}
     if options[:url].nil? and not actions_requiring_url.index( options[:action]).nil?
-      options[:url] = ask("Url?  ") { |q| }
+      options[:url] = ask("Url?  ") { |q| }.to_s
       options[:url] = nil if options[:url].strip() == ''
     end
   end
@@ -164,7 +164,7 @@ class Lockr
       case options[:action]
       when 'a', 'add'
         if options[:generatepwd].nil?
-          password = ask("Password?  ") { |q| q.echo = "x" }
+          password = ask("Password?  ") { |q| q.echo = "x" }.to_s
         else 
           password = PasswordGenerator.new.generate( options[:generatepwd])
         end 
