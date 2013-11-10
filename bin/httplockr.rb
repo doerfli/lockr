@@ -21,10 +21,10 @@ register Padrino::Helpers
 
 set :pwdmgr, init.getPwdMgr()
 # server config
-set :public_dir, 'resources/static'
+set :public_dir, File.expand_path('../../resources/static', __FILE__) 
 set :bind, '127.0.0.1'
 set :port, 32187
-set :views, 'resources/views'
+set :views, File.expand_path('../../resources/views', __FILE__) 
 enable :run
  
 get '/' do
