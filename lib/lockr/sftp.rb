@@ -4,7 +4,7 @@ require 'set'
 require 'lockr/fileutils'
 
 class SFTP
-  include FileUtils
+  include LockrFileUtils
   
   # upload the vault via sftp to the location specified in the configuration
   def upload( config, vault)

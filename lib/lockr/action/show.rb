@@ -1,18 +1,18 @@
-require 'lockr/action/aes'
+require 'lockr/action/base'
 
-class ShowAction < AesAction
+class ShowAction < BaseAction
   
-  def initialize(id,username,keyfile, vault)
-    keyfilehash = FileUtils.calculate_sha512_hash( keyfile)
+  def initialize(id, username, keyfile, vault)
+    super( keyfile, vault)
     
-    pwd_directory = load_from_vault( vault)
+    pwd_directory = @pwdmgr.list()
     
     unless pwd_directory.has_key?( id)
       puts "Id '#{id}' not found"
       exit 10
     end
     
-    pwd_directory_id = YAML::load(decrypt( pwd_directory[id][:enc], keyfilehash, pwd_directory[id][:salt]))
+    pwd_directory_id = pwd_directory[id]
     
     if username.nil? 
       if pwd_directory_id.length == 1

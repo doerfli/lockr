@@ -1,0 +1,44 @@
+<h1>Lockr password manager</h1>
+
+<div class="spacebelow">
+    <a id="addnew" class="button">Add new site</a>
+</div>
+<div class="entries">
+    <table class="entrytable">
+        <thead>
+            <th>
+                Site ID
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Password functions
+            </th>
+        </thead>
+        <tbody>
+            <% for entry in directory.keys() %>
+                <% if directory[entry] %>
+                    <% for store in directory[entry].values() %>
+                        <%= erb :entryrow, :locals => { :store => store } %>
+                    <% end %>
+                <% else %>
+                    <tr>
+                        <td>
+                            <%= entry %>
+                        </td>
+                        <td>
+                            Unable to decrypt
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                <% end%>
+            <% end %>
+        </tbody>
+    </table>
+    
+    <%= erb(:addnewsite, :layout => false) %>
+    <%= erb(:changepwd, :layout => false) %>
+    <%= erb(:deletepwd, :layout => false) %>
+</div>
