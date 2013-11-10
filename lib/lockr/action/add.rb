@@ -3,12 +3,11 @@ require 'lockr/action/base'
 class AddAction < BaseAction
   
   def initialize(id,url,username,pwd,keyfile,vault)
-    keyfilehash = LockrFileUtils.calculate_sha512_hash( keyfile)
-    
-    pwd_directory = load_from_vault( vault)
+    super( keyfile, vault)
+    pwd_directory = @pwdmgr.list()
     
     if pwd_directory.has_key?( id)
-      pwd_directory_id = YAML::load(decrypt( pwd_directory[id][:enc], keyfilehash, pwd_directory[id][:salt]))
+      pwd_directory_id = pwd_directory[id]
     else
       pwd_directory_id = {}
     end
@@ -20,13 +19,8 @@ class AddAction < BaseAction
       end
     end
     
-    new_store = PasswordStore.new( id, url, username, pwd)
-    pwd_directory_id[username] = new_store
-    
-    pwd_directory[id] = {}
-    pwd_directory[id][:enc], pwd_directory[id][:salt] = encrypt( pwd_directory_id.to_yaml, keyfilehash)
-    
-    save_to_vault( pwd_directory, vault)
+    # ###TODO add url
+    @pwdmgr.add( id.to_str, username.to_str, pwd.to_str)
     say("Password saved for ID '<%= color('#{id}', :blue) %>' and user '<%= color('#{username}', :green) %>'")
   end
   

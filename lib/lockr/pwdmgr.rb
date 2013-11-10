@@ -42,6 +42,25 @@ class PasswordManager
     end
   end
   
+  def add( id, username, password)
+    vault = decrypt_vault()
+    site_dir = {}
+    
+    # get site directory
+    if vault.has_key?( id)
+      site_dir = vault[id]
+    end
+    
+    # TODO add url
+    new_store = PasswordStore.new( id, nil, username, password)
+    site_dir[username] = new_store
+    vault[id] = site_dir
+    
+    encrypt_vault( vault)
+    puts 'Added new id/username combination'
+    return new_store
+  end
+  
   def change( id, username, password)
     vault = decrypt_vault()
     site_dir = vault[id]
@@ -63,25 +82,6 @@ class PasswordManager
     
     encrypt_vault( vault)
     puts 'Deleted password'
-  end
-  
-  def add( id, username, password)
-    vault = decrypt_vault()
-    site_dir = {}
-    
-    # get site directory
-    if vault.has_key?( id)
-      site_dir = vault[id]
-    end
-    
-    # TODO add url
-    new_store = PasswordStore.new( id, nil, username, password)
-    site_dir[username] = new_store
-    vault[id] = site_dir
-    
-    encrypt_vault( vault)
-    puts 'Added new id/username combination'
-    return new_store
   end
   
 private
