@@ -13,8 +13,12 @@ class HttpLockrInit
     end
     
     configfile = Configuration.new()
-    cfg = configfile.config[:lockr]
-    options[:vault] = File.expand_path(cfg[:vault]) if options[:vault] == 'vault.yaml'
+    cfg = nil
+    if configfile.config
+      cfg = configfile.config[:lockr]
+    end
+    puts cfg
+    options[:vault] = File.expand_path(cfg[:vault]) if options[:vault] == 'vault.yaml' and cfg != nil
     
     @pwdmgr = PasswordManager.new( options[:keyfile], options[:vault])
     @load_browser = options[:browser]
