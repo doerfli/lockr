@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = LockrVer::VERSION
   s.date        = LockrVer::DATE
   s.executables << 'lockr'
-  s.executables << 'httplockr.rb'
+  s.executables << 'weblockr'
   s.summary     = 'Password manager with local web interface and command line tools'
   s.description = """Lockr is a password manager that features a local web interface 
                      (no cloud, all on your local machine) as well as command line function 
