@@ -35,10 +35,8 @@ get '/' do
 end
 
 get '/password' do
-  id = params[:id]
-  username = params[:username]
-  settings.pwdmgr.copy_to_clipboard( id, username)
-  redirect '/'
+  settings.pwdmgr.copy_to_clipboard( params[:id], params[:username])
+  json({:message => "Password copied to clipboard. Clipboard reset in 15 seconds."})
 end
 
 post '/password' do

@@ -18,6 +18,26 @@ $(document).ready(function() {
     $( '#resultbox').hide();
     $( '#errorbox').hide();
     
+    $( "a#copypwd").click( function() {
+      var id = $( this).siblings( ".id").get(0).value;
+      var username = $( this).siblings( ".username").get(0).value;
+      jQuery.ajax({
+        url: '/password',
+        method: 'GET',
+        data: {"id": id , "username": username},
+        contentType: 'application/json',
+        dataType: 'json'
+      }).done(function (response) {
+        $( '#errorbox').hide();
+        $( '#resultbox').show();
+        $( '#resultmsg').html( response.message);
+      }).fail(function () {
+        $( '#resultbox').hide();
+        $( '#errorbox').show();
+        $( '#errormsg').html( "Something went wrong.");
+      });
+    });
+    
     $( "#dialog-addnewsite" ).dialog({
       autoOpen: false,
       height: 400,
