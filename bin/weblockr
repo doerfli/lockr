@@ -43,31 +43,21 @@ end
 
 post '/password' do
   json = convertFormToMap( request.body.read)
-  id = json['id']
-  username = json['username']
-  password = json['password']
-  newPwdstore = settings.pwdmgr.add( id, username, password)
+  newPwdstore = settings.pwdmgr.add( json['id'], json['username'], json['password'])
   dir = settings.pwdmgr.list()
-  json({:message => "Site &quot;#{id}/#{username}&quot; added"})
+  json({:message => "Site &quot;#{json['id']}/#{json['username']}&quot; added"})
 end
 
 patch '/password' do
   json = convertFormToMap( request.body.read)
-  id = json['id']
-  username = json['username']
-  password = json['password']
-  settings.pwdmgr.change( id, username, password)
-  json({:message => "Password for site &quot;#{id}/#{username}&quot; updated"})
+  settings.pwdmgr.change( json['id'], json['username'], json['password'])
+  json({:message => "Password for site &quot;#{json['id']}/#{json['username']}&quot; updated"})
 end
 
 delete '/password' do
   json = convertFormToMap( request.body.read)
-  id = json['id']
-  username = json['username']
-  puts id
-  puts username
-  settings.pwdmgr.delete( id, username)
-  json({:message => "Password for site &quot;#{id}/#{username}&quot; deleted"})
+  settings.pwdmgr.delete( json['id'], json['username'])
+  json({:message => "Password for site &quot;#{json['id']}/#{json['username']}&quot; deleted"})
 end
 
 def convertFormToMap( jsonForm)
