@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.files       = Dir.glob("{bin,lib,resources}/**/*")
   s.homepage    = 'http://lockr.byteblues.com/'
   
-  s.add_dependency( 'highline', '>=1.6.13')
+  s.add_dependency( 'highline', '~> 1.6.20')
   s.add_dependency( 'bundler', '>=1.1.4')
   s.add_dependency( 'net-sftp', '>=2.0.5')
   s.add_dependency( 'sinatra', '~>1.4.4')

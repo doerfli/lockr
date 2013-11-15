@@ -15,6 +15,9 @@ $(document).ready(function() {
         $( "#dialog-addnewsite" ).dialog( "open" );
     });
     
+    $( '#resultbox').hide();
+    $( '#errorbox').hide();
+    
     $( "#dialog-addnewsite" ).dialog({
       autoOpen: false,
       height: 400,
@@ -22,15 +25,24 @@ $(document).ready(function() {
       modal: true,
       buttons: {
         "Save": function() {
-          $( "form#form-add").submit();
+          jQuery.ajax({
+            url: '/password',
+            method: 'POST',
+            data: $('#form-add').serialize()
+          }).done(function (response) {
+            $( "#form-add").find("input[type=text], input[type=password]").val("");
+            $( "#dialog-addnewsite" ).dialog( "close" );
+            $( '#resultbox').show();
+            $( '#resultmsg').html( response);
+          }).fail(function () {
+            $( "#dialog-addnewsite" ).dialog( "close" );
+            $( '#errorbox').show();
+            $( '#errormsg').html( "Something went wrong.");
+          });
         },
         "Cancel": function() {
           $( this ).dialog( "close" );
         }
-      },
-      close: function() {
-          // clean all fields
-          $("dialog-addnewsite input").each().val( "" ).removeClass( "ui-state-error" );
       }
     });
     
