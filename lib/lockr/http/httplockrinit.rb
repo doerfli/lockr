@@ -17,7 +17,6 @@ class HttpLockrInit
     if configfile.config
       cfg = configfile.config[:lockr]
     end
-    puts cfg
     options[:vault] = File.expand_path(cfg[:vault]) if options[:vault] == 'vault.yaml' and cfg != nil
     
     @pwdmgr = PasswordManager.new( options[:keyfile], options[:vault])
