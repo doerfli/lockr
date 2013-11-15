@@ -4,6 +4,7 @@ require 'lockr/http/httplockrinit'
 require 'erb'
 require 'clipboard'  
 require 'padrino-helpers'
+require 'json'
 
 include ERB::Util
 
@@ -12,6 +13,7 @@ init.start()
 
 # now start sinatra
 require 'sinatra'
+require "sinatra/json"
 
 if init.getLoadBrowser
   require "browser_gui"  
@@ -49,11 +51,12 @@ post '/password' do
 end
 
 patch '/password' do
-  id = params[:id]
-  username = params[:username]
-  password = params[:password]
+  json = Hash[JSON.parse(request.body.read).map{|el| [el['name'], el['value']]}]
+  id = json['id']
+  username = json['username']
+  password = json['password']
   settings.pwdmgr.change( id, username, password)
-  redirect '/'
+  json({:message => "Password for site &quot;#{id}/#{username}&quot; updated"})
 end
 
 delete '/password' do

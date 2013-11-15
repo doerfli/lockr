@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency( 'bundler', '>=1.1.4')
   s.add_dependency( 'net-sftp', '>=2.0.5')
   s.add_dependency( 'sinatra', '~>1.4.4')
+  s.add_dependency( "sinatra-contrib", "~> 1.4.1")
   s.add_dependency( "clipboard", "~> 1.0.5")
   s.add_dependency( "rufus-scheduler", "~> 3.0.2")
   s.add_dependency( "padrino-helpers", "~> 0.11.4")

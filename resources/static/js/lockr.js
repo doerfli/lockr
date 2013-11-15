@@ -63,15 +63,27 @@ $(document).ready(function() {
       modal: true,
       buttons: {
         "Change": function() {
-          $( "form#form-change").submit();
+          jQuery.ajax({
+            url: '/password',
+            method: 'PATCH',
+            data: JSON.stringify($('#form-change').serializeArray()),
+            contentType: 'application/json',
+            dataType: 'json'
+          }).done(function (response) {
+            console.log( response);
+            $( "#form-change").find("input[type=text], input[type=password]").val("");
+            $( "#dialog-changepwd" ).dialog( "close" );
+            $( '#resultbox').show();
+            $( '#resultmsg').html( response.message);
+          }).fail(function () {
+            $( "#dialog-changepwd" ).dialog( "close" );
+            $( '#errorbox').show();
+            $( '#errormsg').html( "Something went wrong.");
+          });
         },
         "Cancel": function() {
           $( this ).dialog( "close" );
         }
-      },
-      close: function() {
-          // clean all fields
-          $("dialog-changepwd input").each().val( "" ).removeClass( "ui-state-error" );
       }
     });
     
