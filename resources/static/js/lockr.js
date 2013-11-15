@@ -110,15 +110,29 @@ $(document).ready(function() {
       modal: true,
       buttons: {
         "Delete": function() {
-          $( "form#form-delete").submit();
+          jQuery.ajax({
+            url: '/password',
+            method: 'DELETE',
+            data: JSON.stringify($('#form-delete').serializeArray()),
+            contentType: 'application/json',
+            dataType: 'json'
+          }).done(function (response) {
+            console.log( response);
+            $( "#form-delete").find("input[type=text], input[type=password]").val("");
+            $( "#dialog-deletepwd" ).dialog( "close" );
+            $( '#errorbox').hide();
+            $( '#resultbox').show();
+            $( '#resultmsg').html( response.message);
+          }).fail(function () {
+            $( "#dialog-delete" ).dialog( "close" );
+            $( '#resultbox').hide();
+            $( '#errorbox').show();
+            $( '#errormsg').html( "Something went wrong.");
+          });
         },
         "Cancel": function() {
           $( this ).dialog( "close" );
         }
-      },
-      close: function() {
-          // clean all fields
-          $("dialog-deletepwd input").each().val( "" ).removeClass( "ui-state-error" );
       }
     });
     

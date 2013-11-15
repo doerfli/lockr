@@ -61,10 +61,13 @@ patch '/password' do
 end
 
 delete '/password' do
-  id = params[:id]
-  username = params[:username]
+  json = convertFormToMap( request.body.read)
+  id = json['id']
+  username = json['username']
+  puts id
+  puts username
   settings.pwdmgr.delete( id, username)
-  redirect '/'
+  json({:message => "Password for site &quot;#{id}/#{username}&quot; deleted"})
 end
 
 def convertFormToMap( jsonForm)
