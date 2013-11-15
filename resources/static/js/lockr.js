@@ -28,14 +28,18 @@ $(document).ready(function() {
           jQuery.ajax({
             url: '/password',
             method: 'POST',
-            data: $('#form-add').serialize()
+            data: JSON.stringify($('#form-add').serializeArray()),
+            contentType: 'application/json',
+            dataType: 'json'
           }).done(function (response) {
             $( "#form-add").find("input[type=text], input[type=password]").val("");
             $( "#dialog-addnewsite" ).dialog( "close" );
+            $( '#errorbox').hide();
             $( '#resultbox').show();
-            $( '#resultmsg').html( response);
+            $( '#resultmsg').html( response.message);
           }).fail(function () {
             $( "#dialog-addnewsite" ).dialog( "close" );
+            $( '#resultbox').hide();
             $( '#errorbox').show();
             $( '#errormsg').html( "Something went wrong.");
           });
@@ -73,10 +77,12 @@ $(document).ready(function() {
             console.log( response);
             $( "#form-change").find("input[type=text], input[type=password]").val("");
             $( "#dialog-changepwd" ).dialog( "close" );
+            $( '#errorbox').hide();
             $( '#resultbox').show();
             $( '#resultmsg').html( response.message);
           }).fail(function () {
             $( "#dialog-changepwd" ).dialog( "close" );
+            $( '#resultbox').hide();
             $( '#errorbox').show();
             $( '#errormsg').html( "Something went wrong.");
           });

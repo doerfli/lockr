@@ -42,16 +42,17 @@ get '/password' do
 end
 
 post '/password' do
-  id = params[:id]
-  username = params[:username]
-  password = params[:password]
+  json = convertFormToMap( request.body.read)
+  id = json['id']
+  username = json['username']
+  password = json['password']
   newPwdstore = settings.pwdmgr.add( id, username, password)
   dir = settings.pwdmgr.list()
-  "Site &quot;#{id}/#{username}&quot; added"
+  json({:message => "Site &quot;#{id}/#{username}&quot; added"})
 end
 
 patch '/password' do
-  json = Hash[JSON.parse(request.body.read).map{|el| [el['name'], el['value']]}]
+  json = convertFormToMap( request.body.read)
   id = json['id']
   username = json['username']
   password = json['password']
@@ -66,3 +67,6 @@ delete '/password' do
   redirect '/'
 end
 
+def convertFormToMap( jsonForm)
+  Hash[JSON.parse(jsonForm).map{|el| [el['name'], el['value']]}]
+end
