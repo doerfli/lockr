@@ -45,7 +45,7 @@ post '/password' do
   password = params[:password]
   newPwdstore = settings.pwdmgr.add( id, username, password)
   dir = settings.pwdmgr.list()
-  "Site added successfully"
+  "Site &quot;#{id}/#{username}&quot; added"
 end
 
 patch '/password' do
