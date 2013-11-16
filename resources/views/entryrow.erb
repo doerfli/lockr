@@ -1,4 +1,4 @@
-<tr>
+<tr class="data" data-id="<%= store.id %>" data-username="<%= store.username %>">
     <td>
         <%= store.id %>
     </td>
@@ -6,8 +6,6 @@
         <%= store.username %>
     </td>
     <td>
-        <input type="hidden" class="id" value="<%= store.id %>"/>
-        <input type="hidden" class="username" value="<%= store.username %>"/>
         <a id="copypwd" class="button">Copy</a>
         <a id="changepwd" class="button">Change</a>
         <a id="deletepwd" class="button">Delete</a>                            

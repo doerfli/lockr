@@ -19,12 +19,11 @@ $(document).ready(function() {
     $( '#errorbox').hide();
     
     $( "a#copypwd").click( function() {
-      var id = $( this).siblings( ".id").get(0).value;
-      var username = $( this).siblings( ".username").get(0).value;
+      var data = $( this).parents("tr.data")[0].dataset;
       jQuery.ajax({
         url: '/password',
         method: 'GET',
-        data: {"id": id , "username": username},
+        data: {"id": data.id, "username": data.username},
         contentType: 'application/json',
         dataType: 'json'
       }).done(function (response) {
@@ -71,12 +70,11 @@ $(document).ready(function() {
     });
     
     $( "a#changepwd").click( function() {
-        var id = $( this).siblings( ".id").get(0).value;
-        var username = $( this).siblings( ".username").get(0).value;
-        $("#dialog-changepwd #id").attr('value', id);
-        $("#dialog-changepwd #id_label").html( id);
-        $("#dialog-changepwd #username").attr('value', username);
-        $("#dialog-changepwd #username_label").html( username);
+        var data = $( this).parents("tr.data")[0].dataset;
+        $("#dialog-changepwd #id").attr('value', data.id);
+        $("#dialog-changepwd #id_label").html( data.id);
+        $("#dialog-changepwd #username").attr('value', data.username);
+        $("#dialog-changepwd #username_label").html( data.username);
         $("#dialog-changepwd" ).dialog( "open" );
     });
     
@@ -114,12 +112,11 @@ $(document).ready(function() {
     });
     
     $( "a#deletepwd").click( function() {
-        var id = $( this).siblings( ".id").get(0).value;
-        var username = $( this).siblings( ".username").get(0).value;
-        $("#dialog-deletepwd #id").attr('value', id);
-        $("#dialog-deletepwd #id_label").html( id);
-        $("#dialog-deletepwd #username").attr('value', username);
-        $("#dialog-deletepwd #username_label").html( username);
+        var data = $( this).parents("tr.data")[0].dataset;
+        $("#dialog-deletepwd #id").attr('value', data.id);
+        $("#dialog-deletepwd #id_label").html( data.id);
+        $("#dialog-deletepwd #username").attr('value', data.username);
+        $("#dialog-deletepwd #username_label").html( data.username);
         $("#dialog-deletepwd" ).dialog( "open" );
     });
     
