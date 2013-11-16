@@ -22,7 +22,6 @@ $(document).ready(function() {
       var data = $( this).parents("tr.data")[0].dataset;
       jQuery.ajax({
         url: '/password',
-        method: 'GET',
         data: {"id": data.id, "username": data.username},
         contentType: 'application/json',
         dataType: 'json'
