@@ -100,7 +100,6 @@ $(document).ready(function() {
             contentType: 'application/json',
             dataType: 'json'
           }).done(function (response) {
-            console.log( response);
             $( "#form-change").find("input[type=text], input[type=password]").val("");
             $( "#dialog-changepwd" ).dialog( "close" );
             $( '#errorbox').hide();
@@ -142,12 +141,16 @@ $(document).ready(function() {
             contentType: 'application/json',
             dataType: 'json'
           }).done(function (response) {
-            console.log( response);
+            var id = $('#form-delete #id').attr('value');
+            console.log(id);
+            var tr = $(".entrytable tr[data-id='" + id + "']")[0];
+			console.log(tr);
             $( "#form-delete").find("input[type=text], input[type=password]").val("");
             $( "#dialog-deletepwd" ).dialog( "close" );
             $( '#errorbox').hide();
             $( '#resultbox').show();
             $( '#resultmsg').html( response.message);
+            $( '.entrytable').dataTable().fnDeleteRow( tr);
           }).fail(function () {
             $( "#dialog-delete" ).dialog( "close" );
             $( '#resultbox').hide();
