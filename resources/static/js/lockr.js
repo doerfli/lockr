@@ -57,6 +57,12 @@ $(document).ready(function() {
             $( '#errorbox').hide();
             $( '#resultbox').show();
             $( '#resultmsg').html( response.message);
+            $( '.entrytable').dataTable().fnAddData( [
+	        	response.row[0],
+	        	response.row[1],
+	        	response.row[2],
+	        	'<a id="copypwd" class="button">Copy</a> <a id="changepwd" class="button">Change</a> <a id="deletepwd" class="button">Delete</a>'] );
+	      	$( "a.button" ).button();
           }).fail(function () {
             $( "#dialog-addnewsite" ).dialog( "close" );
             $( '#resultbox').hide();
