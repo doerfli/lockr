@@ -41,14 +41,14 @@ end
 
 post '/password' do
   json = convertFormToMap( request.body.read)
-  newPwdstore = settings.pwdmgr.add( json['id'], json['username'], json['password'])
+  newPwdstore = settings.pwdmgr.add( json['id'], json['username'], json['password'], json['url'])
   dir = settings.pwdmgr.list()
   json({:message => "Site &quot;#{json['id']}/#{json['username']}&quot; added"})
 end
 
 patch '/password' do
   json = convertFormToMap( request.body.read)
-  settings.pwdmgr.change( json['id'], json['username'], json['password'])
+  settings.pwdmgr.change( json['id'], json['username'], json['password'], json['url'])
   json({:message => "Password for site &quot;#{json['id']}/#{json['username']}&quot; updated"})
 end
 

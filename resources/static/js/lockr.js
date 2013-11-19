@@ -38,8 +38,9 @@ $(document).ready(function() {
     
     $( "#dialog-addnewsite" ).dialog({
       autoOpen: false,
-      height: 400,
+      height: 450,
       width: 400,
+      position: { my: "left top", at: "left bottom", of: "a#addnew" },
       modal: true,
       buttons: {
         "Save": function() {
@@ -74,12 +75,13 @@ $(document).ready(function() {
         $("#dialog-changepwd #id_label").html( data.id);
         $("#dialog-changepwd #username").attr('value', data.username);
         $("#dialog-changepwd #username_label").html( data.username);
+        $("#dialog-changepwd #url").attr('value', data.url);
         $("#dialog-changepwd" ).dialog( "open" );
     });
     
     $( "#dialog-changepwd" ).dialog({
       autoOpen: false,
-      height: 400,
+      height: 450,
       width: 400,
       modal: true,
       buttons: {

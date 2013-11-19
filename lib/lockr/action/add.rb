@@ -19,8 +19,7 @@ class AddAction < BaseAction
       end
     end
     
-    # ###TODO add url
-    @pwdmgr.add( id, username, pwd)
+    @pwdmgr.add( id, username, pwd, url)
     say("Password saved for ID '<%= color('#{id}', :blue) %>' and user '<%= color('#{username}', :green) %>'")
   end
   

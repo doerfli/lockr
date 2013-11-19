@@ -42,7 +42,7 @@ class PasswordManager
     end
   end
   
-  def add( id, username, password)
+  def add( id, username, password, url)
     vault = decrypt_vault()
     site_dir = {}
     
@@ -51,8 +51,7 @@ class PasswordManager
       site_dir = vault[id]
     end
     
-    # TODO add url
-    new_store = PasswordStore.new( id, nil, username, password)
+    new_store = PasswordStore.new( id, url, username, password)
     site_dir[username] = new_store
     vault[id] = site_dir
     
@@ -61,10 +60,11 @@ class PasswordManager
     return new_store
   end
   
-  def change( id, username, password)
+  def change( id, username, password, url)
     vault = decrypt_vault()
     site_dir = vault[id]
-    site_dir[username].password = password
+    site_dir[username].password = password if ! password.nil?
+    site_dir[username].url = url if ! url.nil?
     
     encrypt_vault( vault)
     puts 'Changed password'
