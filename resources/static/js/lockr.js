@@ -3,9 +3,10 @@ $(document).ready(function() {
         "bJQueryUI": true,
         "bPaginate": false,
         "aoColumns": [
-          { "sWidth": "25%" },
-          { "sWidth": "25%" },
-          { "sWidth": "50%" }
+          { "sWidth": "20%" },
+          { "sWidth": "20%" },
+          { "sWidth": "30%" },
+          { "sWidth": "30%" }
         ]
     });
     
